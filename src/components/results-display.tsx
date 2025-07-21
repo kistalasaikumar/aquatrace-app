@@ -7,6 +7,7 @@ import { PieChart, Pie, Cell } from 'recharts';
 import { Sparkles, Droplets, Trophy, Medal, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Avatar, AvatarFallback } from './ui/avatar';
+import { ScrollArea } from './ui/scroll-area';
 
 interface LeaderboardEntry {
   name: string;
@@ -112,14 +113,15 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
              <CardHeader>
                 <div className="flex items-center gap-2">
                     <Trophy className="h-6 w-6 text-primary" />
-                    <CardTitle className="font-headline text-2xl text-primary">Aqua Points Leaderboard</CardTitle>
+                    <CardTitle className="font-headline text-2xl text-primary">AquaLeaders</CardTitle>
                 </div>
                 <CardDescription>See how you stack up against other savers!</CardDescription>
             </CardHeader>
             <CardContent>
-                <ul className="space-y-3">
+              <ScrollArea className="h-96">
+                <ul className="space-y-3 pr-4">
                     {results.leaderboard.map((user, index) => (
-                        <li key={index} className={cn(
+                        <li key={`${user.name}-${index}`} className={cn(
                             "flex items-center p-3 rounded-lg",
                             user.isCurrentUser ? "bg-primary/10 border-2 border-primary" : "bg-muted/50"
                         )}>
@@ -144,6 +146,7 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
                         </li>
                     ))}
                 </ul>
+              </ScrollArea>
             </CardContent>
           </Card>
         </div>

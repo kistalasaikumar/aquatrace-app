@@ -6,6 +6,8 @@ import { getWaterSavingTipsAction } from '@/app/actions';
 import { ResultsDisplay, type ResultsData } from '@/components/results-display';
 import { Droplets } from 'lucide-react';
 import { MultiStepQuestionnaire } from '@/components/multi-step-questionnaire';
+import { addScore, getLeaderboard } from '@/services/leaderboardService';
+import type { LeaderboardEntry } from '@/services/leaderboardService';
 
 export default function AquaTracePage() {
   const [loading, setLoading] = useState(false);
@@ -36,6 +38,14 @@ export default function AquaTracePage() {
           return Math.max(0, Math.round(10000 - footprint * 5));
       }
       
+      const currentUserScore = getAquaPoints(totalFootprint);
+
+      // Add score to our "database"
+      await addScore({ name: data.userName, score: currentUserScore });
+
+      // Get updated leaderboard
+      const updatedLeaderboard = await getLeaderboard();
+
       const calculatedResults: ResultsData = {
         totalFootprint,
         footprintBreakdown: [
@@ -44,9 +54,10 @@ export default function AquaTracePage() {
           { name: 'Outdoor', value: outdoorWater, fill: 'hsl(var(--chart-2))' },
         ],
         tips: tipsOutput.tips,
-        leaderboard: [
-            { name: data.userName, score: getAquaPoints(totalFootprint), isCurrentUser: true },
-        ].sort((a,b) => b.score - a.score),
+        leaderboard: updatedLeaderboard.map(entry => ({
+            ...entry,
+            isCurrentUser: entry.name.toLowerCase() === data.userName.toLowerCase()
+        })),
       };
 
       setResults(calculatedResults);
