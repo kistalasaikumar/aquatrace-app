@@ -23,12 +23,13 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Loader2, Users, Utensils, ShowerHead, Shirt, MapPin, Flower, Droplets, ArrowLeft, Beef, ShoppingCart } from 'lucide-react';
+import { Loader2, Users, ShowerHead, Shirt, MapPin, Droplets, ArrowLeft, Beef, Leaf, Building, Home, Mountain, Recycle } from 'lucide-react';
 import type { WaterFootprintAnalysisInput } from '@/ai/flows/generate-water-saving-tips';
 import { Slider } from './ui/slider';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Progress } from './ui/progress';
 import { DUAL_FLUSH_ICON, LOW_FLOW_ICON, STANDARD_FLUSH_ICON } from './icons';
+import { cn } from '@/lib/utils';
 
 const formSchema = z.object({
   // Step 1
@@ -42,12 +43,12 @@ const formSchema = z.object({
   
   // Step 2
   dietType: z.string(),
-  eatOutFrequency: z.string(),
-  foodWasteFrequency: z.string(),
+  residenceType: z.string(),
+  shoppingFrequency: z.string(),
+  recyclingFrequency: z.string(),
   
   // Step 3
   laundryFrequency: z.number().min(0).max(30),
-  shoppingFrequency: z.string(),
   location: z.string().min(2, 'Please enter a valid location.'),
 });
 
@@ -79,11 +80,11 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
       toiletType: "Standard",
       bathFrequency: "Weekly",
       gardenWatering: "Weekly",
-      dietType: "Omnivore",
-      eatOutFrequency: "Few times a week",
-      foodWasteFrequency: "Sometimes",
+      dietType: "Meat Eater",
+      residenceType: "Suburban",
+      shoppingFrequency: "Sometimes",
+      recyclingFrequency: "Sometimes",
       laundryFrequency: 4,
-      shoppingFrequency: "Monthly",
       location: 'New York, USA',
     },
   });
@@ -105,7 +106,7 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
     onSubmit(submissionData);
   }
 
-  const progress = Math.round((step / 3) * 100);
+  const progress = Math.round((step / 4) * 100);
 
   return (
     <Card className="w-full max-w-2xl shadow-lg border-2 border-primary/20 animate-in fade-in-50 duration-500">
@@ -115,13 +116,13 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
         </div>
         <CardTitle className="font-headline text-2xl text-primary-dark pt-2">
             {step === 1 && "Household Habits"}
-            {step === 2 && "Dietary Habits"}
+            {step === 2 && "Lifestyle Choices"}
             {step === 3 && "Consumption Habits"}
         </CardTitle>
         <CardDescription>
             Step {step} of 3: 
             {step === 1 && " Start with questions about your home water use."}
-            {step === 2 && " Tell us about what you eat."}
+            {step === 2 && " Now, let's look at how your lifestyle impacts water."}
             {step === 3 && " A few more questions about your lifestyle."}
         </CardDescription>
       </CardHeader>
@@ -304,73 +305,130 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
             {step === 2 && (
               <div className="space-y-8">
                 <FormField
-                    control={form.control}
-                    name="dietType"
-                    render={({ field }) => (
+                  control={form.control}
+                  name="dietType"
+                  render={({ field }) => (
                     <FormItem>
-                        <FormLabel className="flex items-center gap-2"><Utensils className="w-4 h-4" /> Diet Type</FormLabel>
-                        <FormControl>
-                            <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-wrap gap-4">
-                                <FormItem className="flex items-center space-x-2 space-y-0">
-                                    <RadioGroupItem value="Omnivore" />
-                                    <FormLabel className="font-normal flex items-center gap-1.5"><Beef size={16}/> Omnivore</FormLabel>
-                                </FormItem>
-                                <FormItem className="flex items-center space-x-2 space-y-0">
-                                    <RadioGroupItem value="Vegetarian" />
-                                    <FormLabel className="font-normal flex items-center gap-1.5"><Flower size={16}/> Vegetarian</FormLabel>
-                                </FormItem>
-                                <FormItem className="flex items-center space-x-2 space-y-0">
-                                    <RadioGroupItem value="Vegan" />
-                                    <FormLabel className="font-normal flex items-center gap-1.5"><Flower size={16}/> Vegan</FormLabel>
-                                </FormItem>
-                            </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
+                      <FormLabel>Primary Diet</FormLabel>
+                      <FormDescription>Your diet has a huge impact on your virtual water footprint.</FormDescription>
+                      <FormControl>
+                        <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-3 gap-4 pt-2">
+                          <FormItem>
+                            <RadioGroupItem value="Meat Eater" id="meat-eater" className="peer sr-only" />
+                            <FormLabel htmlFor="meat-eater" className={cn("flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer")}>
+                              <Beef className="mb-3 h-6 w-6" />
+                              Meat Eater
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem>
+                            <RadioGroupItem value="Vegetarian" id="vegetarian" className="peer sr-only" />
+                            <FormLabel htmlFor="vegetarian" className={cn("flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer")}>
+                              <Leaf className="mb-3 h-6 w-6" />
+                              Vegetarian
+                            </FormLabel>
+                          </FormItem>
+                           <FormItem>
+                            <RadioGroupItem value="Vegan" id="vegan" className="peer sr-only" />
+                            <FormLabel htmlFor="vegan" className={cn("flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer")}>
+                              <Leaf className="mb-3 h-6 w-6" />
+                              Vegan
+                            </FormLabel>
+                          </FormItem>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
                     </FormItem>
-                    )}
+                  )}
                 />
                  <FormField
-                    control={form.control}
-                    name="eatOutFrequency"
-                    render={({ field }) => (
+                  control={form.control}
+                  name="residenceType"
+                  render={({ field }) => (
                     <FormItem>
-                        <FormLabel>How often do you eat out?</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                                <SelectTrigger><SelectValue placeholder="Select frequency" /></SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                                <SelectItem value="Daily">Daily</SelectItem>
-                                <SelectItem value="Few times a week">A few times a week</SelectItem>
-                                <SelectItem value="Once a week">Once a week</SelectItem>
-                                <SelectItem value="Rarely">Rarely / Never</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <FormMessage />
+                      <FormLabel>Where do you live?</FormLabel>
+                      <FormControl>
+                        <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-3 gap-4 pt-2">
+                          <FormItem>
+                            <RadioGroupItem value="Urban" id="urban" className="peer sr-only" />
+                            <FormLabel htmlFor="urban" className={cn("flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer")}>
+                              <Building className="mb-3 h-6 w-6" />
+                              Urban
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem>
+                            <RadioGroupItem value="Suburban" id="suburban" className="peer sr-only" />
+                            <FormLabel htmlFor="suburban" className={cn("flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer")}>
+                              <Home className="mb-3 h-6 w-6" />
+                              Suburban
+                            </FormLabel>
+                          </FormItem>
+                           <FormItem>
+                            <RadioGroupItem value="Rural" id="rural" className="peer sr-only" />
+                            <FormLabel htmlFor="rural" className={cn("flex flex-col items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer")}>
+                              <Mountain className="mb-3 h-6 w-6" />
+                              Rural
+                            </FormLabel>
+                          </FormItem>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
                     </FormItem>
-                    )}
+                  )}
                 />
-                 <FormField
-                    control={form.control}
-                    name="foodWasteFrequency"
-                    render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>How often do you throw away food?</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                                <SelectTrigger><SelectValue placeholder="Select frequency" /></SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                                <SelectItem value="Often">Often</SelectItem>
-                                <SelectItem value="Sometimes">Sometimes</SelectItem>
-                                <SelectItem value="Rarely">Rarely</SelectItem>
-                                <SelectItem value="Never">Never</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <FormMessage />
-                    </FormItem>
-                    )}
-                />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <FormField
+                      control={form.control}
+                      name="shoppingFrequency"
+                      render={({ field }) => (
+                      <FormItem>
+                          <FormLabel>Shopping Frequency (Clothes, Electronics, etc.)</FormLabel>
+                          <FormControl>
+                              <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col gap-2 pt-2">
+                                  <FormItem className="flex items-center space-x-2 space-y-0">
+                                      <RadioGroupItem value="Rarely" />
+                                      <FormLabel className="font-normal">Rarely</FormLabel>
+                                  </FormItem>
+                                  <FormItem className="flex items-center space-x-2 space-y-0">
+                                      <RadioGroupItem value="Sometimes" />
+                                      <FormLabel className="font-normal">Sometimes</FormLabel>
+                                  </FormItem>
+                                  <FormItem className="flex items-center space-x-2 space-y-0">
+                                      <RadioGroupItem value="Often" />
+                                      <FormLabel className="font-normal">Often</FormLabel>
+                                  </FormItem>
+                              </RadioGroup>
+                          </FormControl>
+                          <FormMessage />
+                      </FormItem>
+                      )}
+                  />
+                  <FormField
+                      control={form.control}
+                      name="recyclingFrequency"
+                      render={({ field }) => (
+                      <FormItem>
+                          <FormLabel>Recycling Frequency</FormLabel>
+                          <FormControl>
+                              <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col gap-2 pt-2">
+                                  <FormItem className="flex items-center space-x-2 space-y-0">
+                                      <RadioGroupItem value="Never" />
+                                      <FormLabel className="font-normal">Never</FormLabel>
+                                  </FormItem>
+                                  <FormItem className="flex items-center space-x-2 space-y-0">
+                                      <RadioGroupItem value="Sometimes" />
+                                      <FormLabel className="font-normal">Sometimes</FormLabel>
+                                  </FormItem>
+                                  <FormItem className="flex items-center space-x-2 space-y-0">
+                                      <RadioGroupItem value="Always" />
+                                      <FormLabel className="font-normal">Always</FormLabel>
+                                  </FormItem>
+                              </RadioGroup>
+                          </FormControl>
+                          <FormMessage />
+                      </FormItem>
+                      )}
+                  />
+                </div>
               </div>
             )}
 
@@ -388,27 +446,6 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
                                 <span className='font-bold text-primary w-6 text-center'>{field.value}</span>
                             </div>
                         </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                    )}
-                />
-                 <FormField
-                    control={form.control}
-                    name="shoppingFrequency"
-                    render={({ field }) => (
-                    <FormItem>
-                        <FormLabel className='flex items-center gap-2'><ShoppingCart size={16} /> How often do you buy new clothing?</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                                <SelectTrigger><SelectValue placeholder="Select frequency" /></SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                                <SelectItem value="Weekly">Weekly</SelectItem>
-                                <SelectItem value="Monthly">Monthly</SelectItem>
-                                <SelectItem value="Few times a year">A few times a year</SelectItem>
-                                <SelectItem value="Rarely">Rarely / Never</SelectItem>
-                            </SelectContent>
-                        </Select>
                         <FormMessage />
                     </FormItem>
                     )}
@@ -459,3 +496,5 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
     </Card>
   );
 }
+
+    
