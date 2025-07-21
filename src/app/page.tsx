@@ -1,18 +1,37 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Droplets } from 'lucide-react';
+import { Droplets, Trophy } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import type { LeaderboardEntry } from '@/services/leaderboardService';
+import { getLeaderboard } from '@/services/leaderboardService';
+import { Leaderboard } from '@/components/leaderboard';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function LandingPage() {
-    const router = useRouter();
+    const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchLeaderboard() {
+            try {
+                const data = await getLeaderboard();
+                setLeaderboard(data);
+            } catch (error) {
+                console.error("Failed to fetch leaderboard", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchLeaderboard();
+    }, []);
 
     return (
         <>
             <main className="flex-grow flex flex-col">
-                <div className="relative h-[calc(100vh-80px)] w-full flex items-center justify-center">
+                <div className="relative min-h-[calc(100vh-80px)] w-full flex items-center justify-center py-12">
                     <Image
                         src="https://placehold.co/1920x1080"
                         alt="Water drop"
@@ -21,18 +40,36 @@ export default function LandingPage() {
                         className="absolute inset-0 z-0 opacity-20"
                         data-ai-hint="water drop"
                     />
-                    <div className="relative z-10 flex flex-col items-center justify-center text-center p-4">
-                        <Droplets className="h-24 w-24 text-primary mb-4" />
-                        <h1 className="text-5xl md:text-7xl font-bold text-primary tracking-tight">
-                            AquaTrace
-                        </h1>
-                        <p className="mt-4 max-w-2xl text-lg md:text-xl text-muted-foreground">
-                            Discover your virtual water footprint. Understand your impact.
-                            <br />
-                            Conserve our most precious resource.
-                        </p>
+                    <div className="relative z-10 flex flex-col items-center justify-center text-center p-4 gap-8">
+                        <div className="flex flex-col items-center justify-center text-center">
+                            <Droplets className="h-24 w-24 text-primary mb-4" />
+                            <h1 className="text-5xl md:text-7xl font-bold text-primary tracking-tight">
+                                AquaTrace
+                            </h1>
+                            <p className="mt-4 max-w-2xl text-lg md:text-xl text-muted-foreground">
+                                Discover your virtual water footprint. Understand your impact.
+                                <br />
+                                Conserve our most precious resource.
+                            </p>
+                        </div>
+                        
+                        {leaderboard.length > 0 && (
+                            <Card className="w-full max-w-md shadow-lg animate-in fade-in-50 duration-500">
+                                <CardHeader>
+                                    <div className="flex items-center gap-2 justify-center">
+                                        <Trophy className="h-6 w-6 text-primary" />
+                                        <CardTitle className="font-headline text-2xl text-primary">AquaLeaders</CardTitle>
+                                    </div>
+                                    <CardDescription>See how you stack up against other savers!</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <Leaderboard leaderboard={leaderboard} />
+                                </CardContent>
+                            </Card>
+                        )}
+
                         <Link href="/calculator" passHref>
-                             <Button size="lg" className="mt-8 text-lg">
+                             <Button size="lg" className="text-lg">
                                 Calculate Your Virtual Water
                             </Button>
                         </Link>

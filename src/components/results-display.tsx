@@ -4,16 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { PieChart, Pie, Cell } from 'recharts';
-import { Sparkles, Droplets, Trophy, Medal, Star } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Avatar, AvatarFallback } from './ui/avatar';
-import { ScrollArea } from './ui/scroll-area';
+import { Sparkles, Droplets, Trophy } from 'lucide-react';
+import type { LeaderboardEntry } from './leaderboard';
+import { Leaderboard } from './leaderboard';
 
-interface LeaderboardEntry {
-  name: string;
-  score: number;
-  isCurrentUser: boolean;
-}
 
 export interface ResultsData {
   totalFootprint: number;
@@ -29,16 +23,6 @@ export interface ResultsData {
 interface ResultsDisplayProps {
   results: ResultsData;
 }
-
-const getTrophyIcon = (rank: number) => {
-    switch (rank) {
-        case 0: return <Trophy className="h-5 w-5 text-yellow-500" />;
-        case 1: return <Medal className="h-5 w-5 text-slate-400" />;
-        case 2: return <Star className="h-5 w-5 text-yellow-600" />;
-        default: return <span className="text-sm font-bold w-5 text-center">{rank + 1}</span>;
-    }
-}
-
 
 export function ResultsDisplay({ results }: ResultsDisplayProps) {
   const chartConfig = results.footprintBreakdown.reduce((acc, item) => {
@@ -118,35 +102,7 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
                 <CardDescription>See how you stack up against other savers!</CardDescription>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-96">
-                <ul className="space-y-3 pr-4">
-                    {results.leaderboard.map((user, index) => (
-                        <li key={`${user.name}-${index}`} className={cn(
-                            "flex items-center p-3 rounded-lg",
-                            user.isCurrentUser ? "bg-primary/10 border-2 border-primary" : "bg-muted/50"
-                        )}>
-                            <div className="flex items-center justify-center w-8 mr-3">
-                                {getTrophyIcon(index)}
-                            </div>
-                            <Avatar className="h-9 w-9 mr-3">
-                                <AvatarFallback className={cn(user.isCurrentUser ? "bg-primary/20" : "")}>
-                                    {user.name.charAt(0).toUpperCase()}
-                                </AvatarFallback>
-                            </Avatar>
-                            <div className="flex-grow">
-                                <p className={cn(
-                                    "font-semibold",
-                                    user.isCurrentUser && "text-primary"
-                                )}>{user.name}</p>
-                            </div>
-                            <div className="text-right">
-                                <p className="font-bold text-lg text-primary">{user.score.toLocaleString()}</p>
-                                <p className="text-xs text-muted-foreground">Aqua Points</p>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-              </ScrollArea>
+              <Leaderboard leaderboard={results.leaderboard} />
             </CardContent>
           </Card>
         </div>
