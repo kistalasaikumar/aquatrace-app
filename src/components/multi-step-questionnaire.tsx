@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Button } from '@/components/ui/button';
@@ -15,24 +15,18 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Loader2, Users, ShowerHead, Shirt, MapPin, Droplets, ArrowLeft, Beef, Leaf, Building, Home, Mountain, Recycle } from 'lucide-react';
-import type { WaterFootprintAnalysisInput } from '@/ai/flows/generate-water-saving-tips';
+import { Loader2, Users, ShowerHead, MapPin, Droplets, ArrowLeft, Beef, Leaf, Building, Home, Mountain, Recycle, Car, Ban, Wind, Waves } from 'lucide-react';
+import type { WaterFootprintAnalysisInput, ExtendedWaterFootprintAnalysisInput } from '@/ai/flows/generate-water-saving-tips';
 import { Slider } from './ui/slider';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Progress } from './ui/progress';
-import { DUAL_FLUSH_ICON, LOW_FLOW_ICON, STANDARD_FLUSH_ICON } from './icons';
+import { DUAL_FLUSH_ICON, LOW_FLOW_ICON, STANDARD_FLUSH_ICON, MOTORCYCLE_ICON } from './icons';
 import { cn } from '@/lib/utils';
+import { Switch } from './ui/switch';
 
 const formSchema = z.object({
-  // Step 1
+  // Step 1: Household Habits
   householdSize: z.number().min(1).max(20),
   showerTime: z.number().min(0).max(60),
   dailyFaucetTime: z.number().min(0).max(60),
@@ -41,30 +35,23 @@ const formSchema = z.object({
   bathFrequency: z.string(),
   gardenWatering: z.string(),
   
-  // Step 2
+  // Step 2: Lifestyle Choices
   dietType: z.string(),
   residenceType: z.string(),
   shoppingFrequency: z.string(),
   recyclingFrequency: z.string(),
   
-  // Step 3
-  laundryFrequency: z.number().min(0).max(30),
+  // Step 3: Consumption Patterns
+  dishwashingMethod: z.string(),
+  laundryFrequency: z.string(), // Changed from number to string for radio group
+  vehicleOwnership: z.string(),
+  hasSwimmingPool: z.boolean(),
+  userName: z.string().min(1, 'Please enter your name for the leaderboard'),
   location: z.string().min(2, 'Please enter a valid location.'),
 });
-
-// For mapping to the AI flow input
-const fullFormSchema = z.object({
-  householdSize: z.coerce.number().min(1, 'Must be at least 1').max(20, 'Please enter a smaller number'),
-  dietType: z.string({ required_error: 'Please select a diet type.' }),
-  showerTime: z.coerce.number().min(0, 'Cannot be negative').max(60, 'Please enter a shorter time'),
-  laundryFrequency: z.coerce.number().min(0, 'Cannot be negative').max(30, 'Please enter a smaller number'),
-  outdoorWatering: z.string().min(1, 'Please describe your watering habits.'),
-  location: z.string().min(2, 'Please enter a valid location.'),
-});
-
 
 interface MultiStepQuestionnaireProps {
-  onSubmit: (data: WaterFootprintAnalysisInput) => void;
+  onSubmit: (data: ExtendedWaterFootprintAnalysisInput) => void;
   isLoading: boolean;
 }
 
@@ -73,6 +60,7 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      // Step 1
       householdSize: 4,
       showerTime: 10,
       dailyFaucetTime: 5,
@@ -80,11 +68,17 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
       toiletType: "Standard",
       bathFrequency: "Weekly",
       gardenWatering: "Weekly",
+      // Step 2
       dietType: "Meat Eater",
       residenceType: "Suburban",
       shoppingFrequency: "Sometimes",
       recyclingFrequency: "Sometimes",
-      laundryFrequency: 4,
+      // Step 3
+      dishwashingMethod: "Dishwasher",
+      laundryFrequency: "Weekly",
+      vehicleOwnership: "None",
+      hasSwimmingPool: false,
+      userName: "",
       location: 'New York, USA',
     },
   });
@@ -93,20 +87,27 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
   const prevStep = () => setStep((prev) => prev - 1);
   
   const handleFormSubmit = (data: z.infer<typeof formSchema>) => {
-    const outdoorWatering = `Takes baths ${data.bathFrequency.toLowerCase()}. Waters garden/lawn ${data.gardenWatering.toLowerCase()}.`;
+    const laundryFrequencyMap: {[key: string]: number} = {
+      "Daily": 7,
+      "Weekly": 2,
+      "Monthly": 0.5
+    };
+
+    const outdoorWatering = `Takes baths ${data.bathFrequency.toLowerCase()}. Waters garden/lawn ${data.gardenWatering.toLowerCase()}. Has swimming pool: ${data.hasSwimmingPool ? 'yes' : 'no'}`;
     
-    const submissionData: WaterFootprintAnalysisInput = {
+    const submissionData: ExtendedWaterFootprintAnalysisInput = {
         householdSize: data.householdSize,
         dietType: data.dietType,
         showerTime: data.showerTime,
-        laundryFrequency: data.laundryFrequency,
+        laundryFrequency: laundryFrequencyMap[data.laundryFrequency] || 2,
         outdoorWatering: outdoorWatering,
         location: data.location,
+        userName: data.userName,
     }
     onSubmit(submissionData);
   }
 
-  const progress = Math.round((step / 4) * 100);
+  const progress = Math.round((step / 3) * 100);
 
   return (
     <Card className="w-full max-w-2xl shadow-lg border-2 border-primary/20 animate-in fade-in-50 duration-500">
@@ -117,20 +118,20 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
         <CardTitle className="font-headline text-2xl text-primary-dark pt-2">
             {step === 1 && "Household Habits"}
             {step === 2 && "Lifestyle Choices"}
-            {step === 3 && "Consumption Habits"}
+            {step === 3 && "Consumption Patterns"}
         </CardTitle>
         <CardDescription>
             Step {step} of 3: 
             {step === 1 && " Start with questions about your home water use."}
             {step === 2 && " Now, let's look at how your lifestyle impacts water."}
-            {step === 3 && " A few more questions about your lifestyle."}
+            {step === 3 && " Finally, a few questions about your consumption."}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-8">
             {step === 1 && (
-              <div className="space-y-8">
+              <div className="space-y-8 animate-in fade-in-50 duration-300">
                 <FormField
                     control={form.control}
                     name="householdSize"
@@ -303,7 +304,7 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
             )}
             
             {step === 2 && (
-              <div className="space-y-8">
+              <div className="space-y-8 animate-in fade-in-50 duration-300">
                 <FormField
                   control={form.control}
                   name="dietType"
@@ -420,7 +421,7 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
                                   </FormItem>
                                   <FormItem className="flex items-center space-x-2 space-y-0">
                                       <RadioGroupItem value="Always" />
-                                      <FormLabel className="font-normal">Always</FormLabel>
+                                      <FormLabel className="font-normal flex items-center gap-1.5"><Recycle size={16}/> Always</FormLabel>
                                   </FormItem>
                               </RadioGroup>
                           </FormControl>
@@ -433,18 +434,108 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
             )}
 
             {step === 3 && (
-              <div className="space-y-8">
+              <div className="space-y-8 animate-in fade-in-50 duration-300">
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                    <FormField
+                        control={form.control}
+                        name="dishwashingMethod"
+                        render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Dishwashing Method</FormLabel>
+                            <FormControl>
+                                <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col gap-2 pt-2">
+                                    <FormItem className="flex items-center space-x-2 space-y-0">
+                                        <RadioGroupItem value="Dishwasher" />
+                                        <FormLabel className="font-normal">Dishwasher</FormLabel>
+                                    </FormItem>
+                                    <FormItem className="flex items-center space-x-2 space-y-0">
+                                        <RadioGroupItem value="Hand Washing" />
+                                        <FormLabel className="font-normal">Hand Washing</FormLabel>
+                                    </FormItem>
+                                </RadioGroup>
+                            </FormControl>
+                        </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="laundryFrequency"
+                        render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Laundry Frequency</FormLabel>
+                            <FormControl>
+                                <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex flex-col gap-2 pt-2">
+                                    <FormItem className="flex items-center space-x-2 space-y-0">
+                                        <RadioGroupItem value="Daily" />
+                                        <FormLabel className="font-normal">Daily</FormLabel>
+                                    </FormItem>
+                                    <FormItem className="flex items-center space-x-2 space-y-0">
+                                        <RadioGroupItem value="Weekly" />
+                                        <FormLabel className="font-normal">Weekly</FormLabel>
+                                    </FormItem>
+                                    <FormItem className="flex items-center space-x-2 space-y-0">
+                                        <RadioGroupItem value="Monthly" />
+                                        <FormLabel className="font-normal">Monthly</FormLabel>
+                                    </FormItem>
+                                </RadioGroup>
+                            </FormControl>
+                        </FormItem>
+                        )}
+                    />
+                </div>
                 <FormField
                     control={form.control}
-                    name="laundryFrequency"
+                    name="vehicleOwnership"
                     render={({ field }) => (
                     <FormItem>
-                        <FormLabel className="flex items-center gap-2"><Shirt className="w-4 h-4" /> Laundry Loads / week</FormLabel>
-                         <FormControl>
-                            <div className='flex items-center gap-4'>
-                                <Slider defaultValue={[field.value]} value={[field.value]} onValueChange={(value) => field.onChange(value[0])} max={15} step={1} />
-                                <span className='font-bold text-primary w-6 text-center'>{field.value}</span>
-                            </div>
+                        <FormLabel>Vehicle Ownership</FormLabel>
+                        <FormControl>
+                            <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex items-center gap-4 pt-2">
+                                <FormItem className="flex items-center space-x-2 space-y-0">
+                                    <RadioGroupItem value="None" />
+                                    <FormLabel className="font-normal flex items-center gap-1.5"><Ban size={16}/> None</FormLabel>
+                                </FormItem>
+                                <FormItem className="flex items-center space-x-2 space-y-0">
+                                    <RadioGroupItem value="Car" />
+                                    <FormLabel className="font-normal flex items-center gap-1.5"><Car size={16}/> Car</FormLabel>
+                                </FormItem>
+                                <FormItem className="flex items-center space-x-2 space-y-0">
+                                    <RadioGroupItem value="Motorcycle" />
+                                    <FormLabel className="font-normal flex items-center gap-1.5"><MOTORCYCLE_ICON className="h-4 w-4"/> Motorcycle</FormLabel>
+                                </FormItem>
+                            </RadioGroup>
+                        </FormControl>
+                    </FormItem>
+                    )}
+                />
+                 <FormField
+                    control={form.control}
+                    name="hasSwimmingPool"
+                    render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                        <div className="space-y-0.5">
+                            <FormLabel className="text-base flex items-center gap-2"><Waves size={16} /> Do you own a swimming pool?</FormLabel>
+                            <FormDescription>
+                                Pools can use a lot of water due to evaporation and maintenance.
+                            </FormDescription>
+                        </div>
+                        <FormControl>
+                            <Switch
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                            />
+                        </FormControl>
+                    </FormItem>
+                    )}
+                />
+                 <FormField
+                    control={form.control}
+                    name="userName"
+                    render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Your Name (for the leaderboard)</FormLabel>
+                        <FormControl>
+                            <Input placeholder="Enter your name" {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -496,5 +587,3 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
     </Card>
   );
 }
-
-    

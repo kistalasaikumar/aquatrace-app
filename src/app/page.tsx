@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { WaterFootprintAnalysisInput, WaterSavingTipsOutput } from '@/ai/flows/generate-water-saving-tips';
+import type { ExtendedWaterFootprintAnalysisInput, WaterSavingTipsOutput } from '@/ai/flows/generate-water-saving-tips';
 import { getWaterSavingTipsAction } from '@/app/actions';
 import { ResultsDisplay, type ResultsData } from '@/components/results-display';
 import { Droplets } from 'lucide-react';
@@ -13,7 +13,7 @@ export default function AquaTracePage() {
   const [results, setResults] = useState<ResultsData | null>(null);
   const [showQuestionnaire, setShowQuestionnaire] = useState(true);
 
-  const handleCalculate = async (data: WaterFootprintAnalysisInput) => {
+  const handleCalculate = async (data: ExtendedWaterFootprintAnalysisInput) => {
     setLoading(true);
     setError(null);
     setShowQuestionnaire(false);
@@ -21,15 +21,20 @@ export default function AquaTracePage() {
     try {
       const tipsOutput: WaterSavingTipsOutput = await getWaterSavingTipsAction(data);
       
-      const dietWater = {
+      const dietWaterMap: {[key: string]: number} = {
         'vegan': 300,
         'vegetarian': 400,
-        'omnivore': 600,
-      }[data.dietType.toLowerCase()] || 500;
+        'meat eater': 600,
+      };
+      const dietWater = dietWaterMap[data.dietType.toLowerCase()] || 500;
       
       const householdWater = data.showerTime * 2.5 * data.householdSize + data.laundryFrequency * 30;
       const outdoorWater = data.outdoorWatering.toLowerCase().includes('daily') ? 150 : (data.outdoorWatering.toLowerCase().includes('never') ? 0 : 75);
       const totalFootprint = Math.round(dietWater + householdWater + outdoorWater);
+
+      const getAquaPoints = (footprint: number) => {
+          return Math.max(0, Math.round(10000 - footprint * 5));
+      }
       
       const calculatedResults: ResultsData = {
         totalFootprint,
@@ -39,6 +44,13 @@ export default function AquaTracePage() {
           { name: 'Outdoor', value: outdoorWater, fill: 'hsl(var(--chart-2))' },
         ],
         tips: tipsOutput.tips,
+        leaderboard: [
+            { name: data.userName, score: getAquaPoints(totalFootprint), isCurrentUser: true },
+            { name: 'EcoWarrior', score: 8200, isCurrentUser: false },
+            { name: 'HydroHelper', score: 7500, isCurrentUser: false },
+            { name: 'AquaSaver', score: 6800, isCurrentUser: false },
+            { name: 'WaterWise', score: 6100, isCurrentUser: false },
+        ].sort((a,b) => b.score - a.score),
       };
 
       setResults(calculatedResults);

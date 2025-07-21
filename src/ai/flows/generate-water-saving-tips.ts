@@ -43,6 +43,10 @@ export type WaterFootprintAnalysisInput = z.infer<
   typeof WaterFootprintAnalysisInputSchema
 >;
 
+export type ExtendedWaterFootprintAnalysisInput = WaterFootprintAnalysisInput & {
+    userName: string;
+}
+
 const WaterSavingTipsOutputSchema = z.object({
   tips: z
     .array(z.string())
