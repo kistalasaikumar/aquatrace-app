@@ -71,7 +71,7 @@ export default function AquaTracePage() {
 
   return (
     <>
-      <main className="flex-grow container mx-auto p-4 md:p-8 flex items-center justify-center">
+      <main className="flex-grow flex flex-col items-center justify-center p-4 md:p-8">
          {showQuestionnaire && <MultiStepQuestionnaire onSubmit={handleCalculate} isLoading={loading} />}
          {loading && !results && (
             <div className="flex flex-col items-center gap-4">
