@@ -3,24 +3,24 @@
 import { useState } from 'react';
 import type { WaterFootprintAnalysisInput, WaterSavingTipsOutput } from '@/ai/flows/generate-water-saving-tips';
 import { getWaterSavingTipsAction } from '@/app/actions';
-import { QuestionnaireForm } from '@/components/questionnaire-form';
 import { ResultsDisplay, type ResultsData } from '@/components/results-display';
-import { WaterFactCard } from '@/components/water-fact-card';
 import { Droplets } from 'lucide-react';
+import { MultiStepQuestionnaire } from '@/components/multi-step-questionnaire';
 
 export default function AquaTracePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [results, setResults] = useState<ResultsData | null>(null);
+  const [showQuestionnaire, setShowQuestionnaire] = useState(true);
 
   const handleCalculate = async (data: WaterFootprintAnalysisInput) => {
     setLoading(true);
     setError(null);
+    setShowQuestionnaire(false);
 
     try {
       const tipsOutput: WaterSavingTipsOutput = await getWaterSavingTipsAction(data);
       
-      // Dummy calculation for water footprint
       const dietWater = {
         'vegan': 300,
         'vegetarian': 400,
@@ -51,12 +51,12 @@ export default function AquaTracePage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-background text-foreground">
+    <div className="min-h-screen w-full bg-background text-foreground flex flex-col">
       <header className="py-6 px-4 md:px-8 border-b border-border/50">
         <div className="container mx-auto flex items-center gap-3">
           <Droplets className="h-8 w-8 text-primary" />
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-primary-dark font-headline">
+            <h1 className="text-2xl md:text-3xl font-bold text-primary font-headline">
               AquaTrace
             </h1>
             <p className="text-sm md:text-base text-muted-foreground">
@@ -66,20 +66,19 @@ export default function AquaTracePage() {
         </div>
       </header>
 
-      <main className="container mx-auto p-4 md:p-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          <div className="lg:col-span-2 space-y-8">
-            <QuestionnaireForm onSubmit={handleCalculate} isLoading={loading} />
-            {error && <div className="text-destructive text-center p-4 rounded-md bg-destructive/10">{error}</div>}
-            {results && <ResultsDisplay results={results} />}
-          </div>
-          <div className="lg:col-span-1">
-            <WaterFactCard />
-          </div>
-        </div>
+      <main className="flex-grow container mx-auto p-4 md:p-8 flex items-center justify-center">
+         {showQuestionnaire && <MultiStepQuestionnaire onSubmit={handleCalculate} isLoading={loading} />}
+         {loading && !results && (
+            <div className="flex flex-col items-center gap-4">
+              <Droplets className="h-16 w-16 text-primary animate-pulse" />
+              <p className="text-xl text-muted-foreground">Calculating your footprint...</p>
+            </div>
+         )}
+         {error && <div className="text-destructive text-center p-4 rounded-md bg-destructive/10">{error}</div>}
+         {results && !loading && <ResultsDisplay results={results} />}
       </main>
 
-       <footer className="text-center py-6 px-4 md:px-8 mt-8 border-t border-border/50 text-muted-foreground text-sm">
+       <footer className="text-center py-6 px-4 md:px-8 mt-auto border-t border-border/50 text-muted-foreground text-sm">
         <p>AquaTrace: Making the invisible visible.</p>
       </footer>
     </div>
