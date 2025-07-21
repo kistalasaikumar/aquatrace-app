@@ -1,7 +1,7 @@
+
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { PieChart, Pie, Cell } from 'recharts';
 import { Sparkles, Droplets, Trophy } from 'lucide-react';
@@ -79,16 +79,14 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
               <CardDescription>Based on your profile, here are some ways you can reduce your footprint.</CardDescription>
             </CardHeader>
             <CardContent>
-              <Accordion type="single" collapsible className="w-full">
+              <ul className="space-y-4">
                 {results.tips.map((tip, index) => (
-                  <AccordionItem value={`item-${index}`} key={index}>
-                    <AccordionTrigger>Tip #{index + 1}</AccordionTrigger>
-                    <AccordionContent className="text-base">
-                      {tip}
-                    </AccordionContent>
-                  </AccordionItem>
+                  <li key={index} className="flex items-start gap-3">
+                    <Sparkles className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                    <span className="text-base">{tip}</span>
+                  </li>
                 ))}
-              </Accordion>
+              </ul>
             </CardContent>
           </Card>
         </div>
