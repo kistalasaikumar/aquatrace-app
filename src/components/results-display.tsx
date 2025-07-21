@@ -93,13 +93,13 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
           </Card>
         </div>
         <div className="lg:col-span-2">
-          <Card className="w-full shadow-lg animate-in fade-in-50 duration-500 delay-400">
+           <Card className="w-full shadow-lg animate-in fade-in-50 duration-500 delay-400">
              <CardHeader>
                 <div className="flex items-center gap-2">
                     <Trophy className="h-6 w-6 text-primary" />
-                    <CardTitle className="font-headline text-2xl text-primary">AquaLeaders</CardTitle>
+                    <CardTitle className="font-headline text-2xl text-primary">Your Standing</CardTitle>
                 </div>
-                <CardDescription>See how you stack up against other savers!</CardDescription>
+                <CardDescription>This is your position on the leaderboard.</CardDescription>
             </CardHeader>
             <CardContent>
               <Leaderboard leaderboard={results.leaderboard} />
