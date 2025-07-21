@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
+import { Header } from '@/components/header';
 
 export const metadata: Metadata = {
   title: 'AquaTrace: Virtual Water Tracker',
@@ -20,8 +21,11 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        {children}
-        <Toaster />
+        <div className="min-h-screen w-full bg-background text-foreground flex flex-col">
+          <Header />
+          {children}
+          <Toaster />
+        </div>
       </body>
     </html>
   );

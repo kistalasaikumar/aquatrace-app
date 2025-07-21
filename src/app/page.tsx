@@ -63,21 +63,7 @@ export default function AquaTracePage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-background text-foreground flex flex-col">
-      <header className="py-6 px-4 md:px-8 border-b border-border/50">
-        <div className="container mx-auto flex items-center gap-3">
-          <Droplets className="h-8 w-8 text-primary" />
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-primary font-headline">
-              AquaTrace
-            </h1>
-            <p className="text-sm md:text-base text-muted-foreground">
-              Discover your virtual water footprint.
-            </p>
-          </div>
-        </div>
-      </header>
-
+    <>
       <main className="flex-grow container mx-auto p-4 md:p-8 flex items-center justify-center">
          {showQuestionnaire && <MultiStepQuestionnaire onSubmit={handleCalculate} isLoading={loading} />}
          {loading && !results && (
@@ -93,6 +79,6 @@ export default function AquaTracePage() {
        <footer className="text-center py-6 px-4 md:px-8 mt-auto border-t border-border/50 text-muted-foreground text-sm">
         <p>AquaTrace: Making the invisible visible.</p>
       </footer>
-    </div>
+    </>
   );
 }
