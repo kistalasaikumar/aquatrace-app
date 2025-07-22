@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Loader2, Search, Droplets } from 'lucide-react';
-import type { ARVisualizerOutput } from '@/ai/flows/ar-visualizer-flow';
+import type { ARVisualizerOutput } from '@/ai/flows/ar-visualizer-schema';
 import { visualizeWaterFootprint } from '@/ai/flows/ar-visualizer-flow';
 import { ModelViewer } from '@/components/model-viewer';
 

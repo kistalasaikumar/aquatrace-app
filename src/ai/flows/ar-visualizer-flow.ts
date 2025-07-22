@@ -3,26 +3,11 @@
  * @fileOverview An AI agent for visualizing virtual water in AR.
  *
  * - visualizeWaterFootprint - A function that processes user queries to visualize water footprints.
- * - ARVisualizerInput - The input type for the visualizeWaterFootprint function.
- * - ARVisualizerOutput - The return type for the visualizeWaterFootprint function.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-
-export const ARVisualizerInputSchema = z.object({
-  query: z.string().describe('The user\'s request, e.g., "show water for 3 burgers"'),
-});
-export type ARVisualizerInput = z.infer<typeof ARVisualizerInputSchema>;
-
-export const ARVisualizerOutputSchema = z.object({
-  item: z.string().describe('The item identified in the query (e.g., "burger").'),
-  quantity: z.number().describe('The quantity of the item (e.g., 3).'),
-  totalWater: z.number().describe('The total virtual water in gallons.'),
-  explanation: z.string().describe('A brief explanation of the result.'),
-});
-export type ARVisualizerOutput = z.infer<typeof ARVisualizerOutputSchema>;
-
+import { ARVisualizerInputSchema, ARVisualizerOutputSchema, type ARVisualizerInput, type ARVisualizerOutput } from './ar-visualizer-schema';
 
 const VIRTUAL_WATER_DATA: Record<string, number> = {
     "burger": 660, // Average for a quarter-pound beef burger in gallons
@@ -55,8 +40,9 @@ const itemDetectionTool = ai.defineTool(
         let quantity = 1;
 
         for (const word of words) {
-            if (VIRTUAL_WATER_DATA[word] || VIRTUAL_WATER_DATA[word.slice(0, -1)]) {
-                item = VIRTUAL_WATER_DATA[word] ? word : word.slice(0, -1);
+            const singularWord = word.endsWith('s') ? word.slice(0, -1) : word;
+            if (VIRTUAL_WATER_DATA[singularWord]) {
+                item = singularWord;
             }
         }
         
@@ -103,10 +89,14 @@ const arVisualizerFlow = ai.defineFlow(
     const {toolCalls, toolOutputs} = await ai.generate({
         model: 'googleai/gemini-2.0-flash',
         prompt: `Parse this query: ${input.query}`,
-        tools: [itemDetectionTool]
+        tools: [itemDetectionTool],
+        toolConfig: {
+          mode: 'required',
+          requiredTool: 'getItemAndQuantity',
+        }
     });
 
-    if (!toolCalls || toolCalls.length === 0) {
+    if (!toolCalls || toolCalls.length === 0 || !toolOutputs || toolOutputs.length === 0) {
         throw new Error("The model did not call the required tool.");
     }
     
