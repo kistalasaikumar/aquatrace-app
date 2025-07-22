@@ -68,7 +68,7 @@ export default function VirtualWaterPage() {
             The data that underlie the concept of virtual water can readily be used to construct water satellite accounts, and brought into economic models of international trade such as the GTAP Computable General Equilibrium Model.[9] Such a model can be used to study the economic implications of changes in the water supply or water policy, as well as the water resource implications of economic development and trade liberalization.
           </p>
            <p className="text-lg leading-relaxed">
-            In sum, virtual water trade allows a new, amplified perspective on water problems: In the framework of recent developments from a supply-oriented to a demand-oriented management of water resources, it opens up new fields of governance and facilitates differentiation and balancing of different perspectives, basic conditions, and interests. Analytically, the concept enables one to distinguish between global, regional, and local levels and their linkages. This means, that water resource problems have to be solved in problems[10][11] if they cannot be successfully addressed in the local or regional watershed. Virtual water trade can thus overcome the hydro-centricity of a narrow watershed view. According to the proceedings of a 2006 conference in Frankfurt, Germany, it seems reasonable to link the new concept with the approach of integrated water resources management.
+            In sum, virtual water trade allows a new, amplified perspective on water problems: In the framework of recent developments from a supply-oriented to demand-oriented management of water resources, it opens up new fields of governance and facilitates differentiation and balancing of different perspectives, basic conditions, and interests. Analytically, the concept enables one to distinguish between global, regional, and local levels and their linkages. This means, that water resource problems have to be solved in problems[10][11] if they cannot be successfully addressed in the local or regional watershed. Virtual water trade can thus overcome the hydro-centricity of a narrow watershed view. According to the proceedings of a 2006 conference in Frankfurt, Germany, it seems reasonable to link the new concept with the approach of integrated water resources management.
           </p>
 
           <div className="pt-8">
@@ -157,6 +157,48 @@ export default function VirtualWaterPage() {
              </ul>
              <p className="text-lg leading-relaxed">The primary goal of these standardized values is to make the calculator accessible and easy to use while still providing a meaningful and educational estimate. They give users a solid baseline to understand their water consumption and how it compares to others without needing to perform complex measurements themselves.</p>
           </div>
+           <div className="space-y-6 pt-8 border-t border-border/50">
+                <h3 className="text-2xl font-bold text-primary/90">References</h3>
+                <ol className="list-decimal list-inside space-y-2 text-base">
+                    <li>
+                        Hoekstra, A. Y. (2003). Virtual water trade : proceedings of the international expert meeting on virtual water trade. IHE. OCLC 66727970.
+                        <a href="https://search.worldcat.org/title/66727970" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-2">[link]</a>
+                    </li>
+                    <li>
+                        Yang, Hong; Reichert, Peter; Abbaspour, Karim C.; Zehnder, Alexander J. B. (2003).
+                        <a href="https://en.wikipedia.org/wiki/Alexander_Zehnder" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-2">[link]</a>
+                    </li>
+                    <li>
+                        Kruzman, Diana (31 May 2021). "U.S. Southwest, Already Parched, Sees 'Virtual Water' Drain Abroad". Undark. Retrieved 10 June 2021.
+                        <a href="https://undark.org/2021/05/31/foreign-farms-virtual-water/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-2">[link]</a>
+                    </li>
+                    <li>
+                        Stack Whitney, Kaitlin; Whitney, Kristoffer (Spring 2018). "John Anthony Allan's 'Virtual Water': Natural Resources Management in the Wake of Neoliberalism".
+                        <a href="https://www.environmentandsociety.org/arcadia/john-anthony-allans-virtual-water-natural-resources-management-wake-neoliberalism" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-2">[link]</a>
+                    </li>
+                    <li>
+                        Turton, A.R. (1998). The Hydropolitics of Southern Africa: The Case of the Zambezi River Basin as an Area of Potential Co-operation Based on Allan's Concept of 'Virtual Water' (MA Thesis ed.). Pretoria: University of South Africa.
+                    </li>
+                    <li>
+                        Turton, A.R., Moodley, S., Goldblatt, M. & Meissner, R. 2000. An Analysis of the Role of Virtual Water in Southern Africa in Meeting Water Scarcity: An Applied Research and Capacity Building Project. Johannesburg: Group for Environmental Monitoring (GEM).
+                    </li>
+                    <li>
+                        Earle, A. & Turton, A.R. 2003. "The Virtual Water Trade amongst Countries of the SADC". In Hoekstra, A. (Ed.) Virtual Water Trade: Proceedings of the International Experts Meeting on Virtual Water Trade. Delft, the Netherlands, 12–13 December 2002. Research Report Series No. 12. Delft: IHE. pp. 183-200.
+                    </li>
+                    <li>
+                        "The End of the Jaffa Orange Highlights Israel Economic Shift - Bloomberg". Bloomberg News. 2020-03-06. Archived from the original on 2020-03-06. Retrieved 2021-09-20.
+                        <a href="https://web.archive.org/web/20200306173403/https://www.bloomberg.com/news/articles/2020-03-05/the-end-of-the-jaffa-orange-highlights-israel-economic-shift" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-2">[link]</a>
+                    </li>
+                    <li>
+                        Berrittella M, Hoekstra AY, Rehdanz K, Roson R, Tol RS (2007). "The Economic Impact of Restricted Water Supply: A Computable General Equilibrium Analysis"
+                        <a href="https://ideas.repec.org/p/sgc/wpaper/93.html" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-2">[link]</a>
+                    </li>
+                    <li>
+                        Allan, Tony (1998). "Watersheds and Problemsheds: Explaining the absence of Armed Conflict over water in the Middle East".
+                        <a href="https://web.archive.org/web/20061127104256/http://meria.idc.ac.il/journal/1998/issue1/jv2n1a7.html" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline ml-2">[link]</a>
+                    </li>
+                </ol>
+            </div>
         </CardContent>
       </Card>
     </main>
