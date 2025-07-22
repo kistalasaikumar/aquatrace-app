@@ -38,7 +38,7 @@ export default function LandingPage() {
                         layout="fill"
                         objectFit="cover"
                         className="absolute inset-0 z-0 opacity-20"
-                        data-ai-hint="water drop"
+                        data-ai-hint="water drops"
                     />
                     <div className="relative z-10 flex flex-col items-center justify-center text-center p-4 gap-8">
                         <div className="flex flex-col items-center justify-center text-center">
