@@ -115,6 +115,48 @@ export default function VirtualWaterPage() {
                 </Table>
             </div>
           </div>
+          <div className="space-y-6 pt-8 border-t border-border/50">
+            <h3 className="text-2xl font-bold text-primary/90">How AquaTrace Calculates Your Footprint</h3>
+            <p className="text-lg leading-relaxed">The calculation is a simplified model designed to give users a good estimate of their daily virtual water usage. It's broken down into three main categories based on the information you provide in the questionnaire:</p>
+            <ol className="list-decimal list-inside space-y-4 text-lg">
+                <li>
+                    <span className="font-bold">Food Consumption:</span> This is the largest component of most people's virtual water footprint. The calculation uses a baseline value depending on your diet:
+                    <ul className="list-disc list-inside ml-6 mt-2">
+                        <li><span className="font-semibold">Meat Eater:</span> 600 gallons/day</li>
+                        <li><span className="font-semibold">Vegetarian:</span> 400 gallons/day</li>
+                        <li><span className="font-semibold">Vegan:</span> 300 gallons/day</li>
+                    </ul>
+                </li>
+                <li>
+                    <span className="font-bold">Household Water Use:</span> This part is calculated based on your daily habits at home:
+                    <ul className="list-disc list-inside ml-6 mt-2">
+                        <li><span className="font-semibold">Total Shower Water</span> = (Your average shower time in minutes) × (2.5 gallons per minute) × (Number of people in your household)</li>
+                        <li><span className="font-semibold">Total Laundry Water</span> = (Number of laundry loads per week) × (30 gallons per load)</li>
+                    </ul>
+                    The <code className="bg-muted px-1.5 py-0.5 rounded">householdWater</code> is the sum of these two.
+                </li>
+                 <li>
+                    <span className="font-bold">Outdoor Water Use:</span> This is estimated based on your outdoor watering habits:
+                    <ul className="list-disc list-inside ml-6 mt-2">
+                         <li><span className="font-semibold">Watering Daily:</span> Adds 150 gallons/day.</li>
+                         <li><span className="font-semibold">Watering Weekly/Monthly:</span> Adds 75 gallons/day.</li>
+                         <li><span className="font-semibold">Never Watering:</span> Adds 0 gallons/day.</li>
+                         <li>This is also influenced by whether you have a swimming pool and how often you take baths.</li>
+                    </ul>
+                </li>
+            </ol>
+            <p className="text-lg leading-relaxed">The <span className="font-bold">Total Daily Footprint</span> is the sum of these three categories: <code className="bg-muted px-1.5 py-0.5 rounded">Food</code> + <code className="bg-muted px-1.5 py-0.5 rounded">Household</code> + <code className="bg-muted px-1.5 py-0.5 rounded">Outdoor</code>.</p>
+            
+            <h4 className="text-xl font-bold text-primary/80 pt-4">Why These Standard Values?</h4>
+             <p className="text-lg leading-relaxed">The values used in the calculation are based on widely recognized industry averages and data from environmental studies to provide a reliable yet simplified estimate. Here's a quick breakdown:</p>
+             <ul className="list-disc list-inside space-y-3 text-lg">
+                <li><span className="font-semibold">Dietary Water Footprint (300-600 gallons/day):</span> These figures are derived from numerous studies on the "virtual water" content of food. It's well-documented that meat production, especially beef, is far more water-intensive than growing vegetables and grains. The numbers represent an average daily diet for each category.</li>
+                <li><span className="font-semibold">Shower Water Usage (2.5 gallons/minute):</span> This is the standard flow rate for showerheads in the United States, as established by the Environmental Protection Agency (EPA). While modern low-flow models are more efficient, this value serves as a common baseline.</li>
+                <li><span className="font-semibold">Laundry Water Usage (30 gallons/load):</span> This is a standard average for a conventional top-loading washing machine. High-efficiency models use less, but 30 gallons is a reasonable estimate for a typical household washing machine.</li>
+                <li><span className="font-semibold">Outdoor Watering (0-150 gallons/day):</span> These are general estimates designed to capture the high water usage of activities like lawn and garden care. A daily watering schedule can consume a significant amount of water, so these figures provide a simplified way to account for that.</li>
+             </ul>
+             <p className="text-lg leading-relaxed">The primary goal of these standardized values is to make the calculator accessible and easy to use while still providing a meaningful and educational estimate. They give users a solid baseline to understand their water consumption and how it compares to others without needing to perform complex measurements themselves.</p>
+          </div>
         </CardContent>
       </Card>
     </main>
