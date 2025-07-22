@@ -13,6 +13,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/calculator', label: 'Calculator' },
   { href: '/virtual-water', label: 'Virtual Water' },
+  { href: '/ar-visualizer', label: 'AR Visualizer' },
   { href: '/about', label: 'About' },
   { href: '/contact-us', label: 'Contact Us' },
 ];
@@ -33,6 +34,7 @@ export function Header() {
             : 'text-muted-foreground',
             className
         )}
+        suppressHydrationWarning
       >
         {label}
       </Button>
