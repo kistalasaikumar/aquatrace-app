@@ -1,5 +1,36 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Droplets } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableCaption } from "@/components/ui/table";
+
+const virtualWaterData = [
+    { product: "Rice (paddy)", usa: "1,275", china: "1,321", india: "2,850", russia: "2,401", indonesia: "2,150", australia: "1,022", brazil: "3,082", japan: "1,221", mexico: "2,182", italy: "1,679", netherlands: "", worldAverage: "2,291" },
+    { product: "Rice (husked)", usa: "1,656", china: "1,716", india: "3,702", russia: "3,118", indonesia: "2,793", australia: "1,327", brazil: "4,003", japan: "1,586", mexico: "2,834", italy: "2,180", netherlands: "", worldAverage: "2,975" },
+    { product: "Rice (broken)", usa: "1,903", china: "1,972", india: "4,254", russia: "3,584", indonesia: "3,209", australia: "1,525", brazil: "4,600", japan: "1,822", mexico: "3,257", italy: "2,506", netherlands: "", worldAverage: "3,419" },
+    { product: "Wheat", usa: "849", china: "690", india: "1,654", russia: "2,375", indonesia: "", australia: "1,588", brazil: "1,616", japan: "734", mexico: "1,066", italy: "2,421", netherlands: "619", worldAverage: "1,334" },
+    { product: "Maize", usa: "489", china: "801", india: "1,937", russia: "1,397", indonesia: "1,285", australia: "744", brazil: "1,180", japan: "1,493", mexico: "1,744", italy: "530", netherlands: "408", worldAverage: "909" },
+    { product: "Soybeans", usa: "1,869", china: "2,617", india: "4,124", russia: "3,933", indonesia: "2,030", australia: "2,106", brazil: "1,076", japan: "2,326", mexico: "3,177", italy: "1,506", netherlands: "", worldAverage: "1,789" },
+    { product: "Sugar cane", usa: "103", china: "117", india: "159", russia: "", indonesia: "164", australia: "141", brazil: "155", japan: "120", mexico: "171", italy: "", netherlands: "", worldAverage: "175" },
+    { product: "Cotton seed", usa: "2,535", china: "1,419", india: "8,264", russia: "", indonesia: "4,453", australia: "1,887", brazil: "2,777", japan: "", mexico: "2,127", italy: "", netherlands: "", worldAverage: "3,644" },
+    { product: "Cotton lint", usa: "5,733", china: "3,210", india: "18,694", russia: "", indonesia: "10,072", australia: "4,268", brazil: "6,281", japan: "", mexico: "4,812", italy: "", netherlands: "", worldAverage: "8,242" },
+    { product: "Barley", usa: "702", china: "848", india: "1,966", russia: "2,359", indonesia: "", australia: "1,425", brazil: "1,373", japan: "697", mexico: "2,120", italy: "1,822", netherlands: "718", worldAverage: "1,388" },
+    { product: "Sorghum", usa: "782", china: "863", india: "4,053", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "1,212", italy: "582", netherlands: "", worldAverage: "2,853" },
+    { product: "Coconuts", usa: "749", china: "", india: "2,255", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "1,954", italy: "", netherlands: "", worldAverage: "2,545" },
+    { product: "Millet", usa: "2,143", china: "1,863", india: "3,269", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "4,534", italy: "", netherlands: "", worldAverage: "4,596" },
+    { product: "Coffee (green)", usa: "4,864", china: "6,290", india: "12,180", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "28,119", italy: "", netherlands: "", worldAverage: "17,373" },
+    { product: "Coffee (roasted)", usa: "5,790", china: "7,488", india: "14,500", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "33,475", italy: "", netherlands: "", worldAverage: "20,682" },
+    { product: "Tea (made)", usa: "", china: "11,110", india: "7,002", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "", italy: "", netherlands: "", worldAverage: "9,205" },
+    { product: "Beef", usa: "13,193", china: "12,560", india: "16,482", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "37,762", italy: "21,167", netherlands: "11,681", worldAverage: "15,497" },
+    { product: "Pork", usa: "3,946", china: "2,211", india: "4,397", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "6,559", italy: "6,377", netherlands: "3,790", worldAverage: "4,856" },
+    { product: "Goat meat", usa: "3,082", china: "3,994", india: "5,187", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "10,252", italy: "4,180", netherlands: "2,791", worldAverage: "4,043" },
+    { product: "Sheep meat", usa: "5,977", china: "5,202", india: "6,692", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "16,878", italy: "7,572", netherlands: "5,298", worldAverage: "6,143" },
+    { product: "Chicken meat", usa: "2,389", china: "3,652", india: "7,736", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "5,013", italy: "2,198", netherlands: "2,222", worldAverage: "3,918" },
+    { product: "Eggs", usa: "1,510", china: "3,550", india: "7,531", russia: "", indonesia: "", australia: "", brazil: "", japan: "", mexico: "4,277", italy: "1,389", netherlands: "1,404", worldAverage: "3,340" },
+    { product: "Milk", usa: "695", china: "1,000", india: "1,369", russia: "1,345", indonesia: "1,143", australia: "915", brazil: "1,001", japan: "812", mexico: "2,382", italy: "861", netherlands: "641", worldAverage: "990" },
+    { product: "Milk powder", usa: "3,234", china: "4,648", india: "6,368", russia: "6,253", indonesia: "5,317", australia: "4,255", brazil: "4,654", japan: "3,774", mexico: "11,077", italy: "4,005", netherlands: "2,982", worldAverage: "4,602" },
+    { product: "Cheese", usa: "3,457", china: "4,963", india: "6,793", russia: "6,671", indonesia: "5,675", australia: "4,544", brazil: "4,969", japan: "4,032", mexico: "11,805", italy: "4,278", netherlands: "3,190", worldAverage: "4,914" },
+    { product: "Leather (bovine)", usa: "14,190", china: "13,513", india: "17,710", russia: "22,575", indonesia: "15,929", australia: "18,384", brazil: "18,222", japan: "11,864", mexico: "40,482", italy: "22,724", netherlands: "12,572", worldAverage: "16,656" },
+];
+
 
 export default function VirtualWaterPage() {
   return (
@@ -37,8 +68,53 @@ export default function VirtualWaterPage() {
             The data that underlie the concept of virtual water can readily be used to construct water satellite accounts, and brought into economic models of international trade such as the GTAP Computable General Equilibrium Model.[9] Such a model can be used to study the economic implications of changes in the water supply or water policy, as well as the water resource implications of economic development and trade liberalization.
           </p>
            <p className="text-lg leading-relaxed">
-            In sum, virtual water trade allows a new, amplified perspective on water problems: In the framework of recent developments from a supply-oriented to demand-oriented management of water resources, it opens up new fields of governance and facilitates differentiation and balancing of different perspectives, basic conditions, and interests. Analytically, the concept enables one to distinguish between global, regional, and local levels and their linkages. This means, that water resource problems have to be solved in problems[10][11] if they cannot be successfully addressed in the local or regional watershed. Virtual water trade can thus overcome the hydro-centricity of a narrow watershed view. According to the proceedings of a 2006 conference in Frankfurt, Germany, it seems reasonable to link the new concept with the approach of integrated water resources management.
+            In sum, virtual water trade allows a new, amplified perspective on water problems: In the framework of recent developments from a supply-oriented to a demand-oriented management of water resources, it opens up new fields of governance and facilitates differentiation and balancing of different perspectives, basic conditions, and interests. Analytically, the concept enables one to distinguish between global, regional, and local levels and their linkages. This means, that water resource problems have to be solved in problems[10][11] if they cannot be successfully addressed in the local or regional watershed. Virtual water trade can thus overcome the hydro-centricity of a narrow watershed view. According to the proceedings of a 2006 conference in Frankfurt, Germany, it seems reasonable to link the new concept with the approach of integrated water resources management.
           </p>
+
+          <div className="pt-8">
+            <h3 className="text-2xl font-bold text-primary/90 mb-4">Virtual water content of selected products</h3>
+            <div className="overflow-x-auto">
+                <Table>
+                    <TableCaption>Average virtual water content of some selected products for a number of selected countries (m³/ton).[15]</TableCaption>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className="font-bold">Product</TableHead>
+                            <TableHead className="text-right font-bold">USA</TableHead>
+                            <TableHead className="text-right font-bold">China</TableHead>
+                            <TableHead className="text-right font-bold">India</TableHead>
+                            <TableHead className="text-right font-bold">Russia</TableHead>
+                            <TableHead className="text-right font-bold">Indonesia</TableHead>
+                            <TableHead className="text-right font-bold">Australia</TableHead>
+                            <TableHead className="text-right font-bold">Brazil</TableHead>
+                            <TableHead className="text-right font-bold">Japan</TableHead>
+                            <TableHead className="text-right font-bold">Mexico</TableHead>
+                            <TableHead className="text-right font-bold">Italy</TableHead>
+                            <TableHead className="text-right font-bold">Netherlands</TableHead>
+                            <TableHead className="text-right font-bold">World average</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {virtualWaterData.map((item) => (
+                            <TableRow key={item.product}>
+                                <TableCell className="font-medium">{item.product}</TableCell>
+                                <TableCell className="text-right">{item.usa}</TableCell>
+                                <TableCell className="text-right">{item.china}</TableCell>
+                                <TableCell className="text-right">{item.india}</TableCell>
+                                <TableCell className="text-right">{item.russia}</TableCell>
+                                <TableCell className="text-right">{item.indonesia}</TableCell>
+                                <TableCell className="text-right">{item.australia}</TableCell>
+                                <TableCell className="text-right">{item.brazil}</TableCell>
+                                <TableCell className="text-right">{item.japan}</TableCell>
+                                <TableCell className="text-right">{item.mexico}</TableCell>
+                                <TableCell className="text-right">{item.italy}</TableCell>
+                                <TableCell className="text-right">{item.netherlands}</TableCell>
+                                <TableCell className="text-right font-bold">{item.worldAverage}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </main>
