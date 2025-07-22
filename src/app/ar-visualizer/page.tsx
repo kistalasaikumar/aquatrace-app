@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -63,8 +64,9 @@ export default function ARVisualizerPage() {
               placeholder="e.g., show water for 3 burgers"
               className="flex-grow"
               disabled={loading}
+              suppressHydrationWarning
             />
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading} suppressHydrationWarning>
               {loading ? <Loader2 className="animate-spin" /> : <Search />}
               <span className="ml-2 hidden md:inline">Visualize</span>
             </Button>
