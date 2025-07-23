@@ -34,8 +34,8 @@ export default function ARVisualizerPage() {
   };
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046",
-    "apple": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/apple.glb?v=1722449997194",
+    "burger": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Buggy/glTF/Buggy.gltf",
+    "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
     "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
     "tomato": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Tomato/glTF/Tomato.gltf",
     "potato": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Potato/glTF/Potato.gltf",
@@ -43,9 +43,9 @@ export default function ARVisualizerPage() {
     "jeans": "https://modelviewer.dev/shared-assets/models/Jeans.glb",
     "orange": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Orange/glTF/Orange.gltf",
     "banana": "https://modelviewer.dev/shared-assets/models/Banana.glb",
-    "slice of bread": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Food_Bread/glTF/Food_Bread.gltf",
+    "slice of bread": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Bread/glTF/Bread.gltf",
     "egg": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Egg/glTF/Egg.gltf",
-    "cheese": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Food_Cheese/glTF/Food_Cheese.gltf",
+    "cheese": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Cheese/glTF/Cheese.gltf",
     "chicken meat": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Chicken/glTF/Chicken.gltf",
     "cup of coffee": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Food_Mug/glTF/Food_Mug.gltf",
   }
