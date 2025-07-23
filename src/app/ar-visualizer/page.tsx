@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Loader2, Search, Droplets } from 'lucide-react';
+import { Loader2, Search, Droplets, Smartphone } from 'lucide-react';
 import type { ARVisualizerOutput } from '@/ai/flows/ar-visualizer-schema';
 import { visualizeWaterFootprint } from '@/ai/flows/ar-visualizer-flow';
 import { ModelViewer } from '@/components/model-viewer';
@@ -44,7 +44,10 @@ export default function ARVisualizerPage() {
     "orange": "https://modelviewer.dev/shared-assets/models/Orange.glb",
     "banana": "https://modelviewer.dev/shared-assets/models/Banana.glb",
     "slice of bread": "https://modelviewer.dev/shared-assets/models/Bread.glb",
-    "egg": "https://modelviewer.dev/shared-assets/models/Egg.glb"
+    "egg": "https://modelviewer.dev/shared-assets/models/Egg.glb",
+    "cheese": "https://modelviewer.dev/shared-assets/models/Cheese.glb",
+    "chicken meat": "https://modelviewer.dev/shared-assets/models/Chicken.glb",
+    "coffee": "https://modelviewer.dev/shared-assets/models/CoffeeMug.glb",
   }
 
   const getModelUrl = (item: string) => {
@@ -105,6 +108,10 @@ export default function ARVisualizerPage() {
                   />
                   <h3 className="text-2xl font-bold mt-4">{result.totalWater.toLocaleString()} Liters</h3>
                   <p className="text-muted-foreground">{result.explanation}</p>
+                   <div className="mt-4 flex items-center gap-2 rounded-md bg-accent p-3 text-sm text-accent-foreground">
+                    <Smartphone size={24} />
+                    <span>On a mobile device? Tap the AR icon in the bottom-right of the viewer to see this in your room!</span>
+                  </div>
               </div>
             )}
           </div>
@@ -113,5 +120,3 @@ export default function ARVisualizerPage() {
     </main>
   );
 }
-
-    
