@@ -34,20 +34,20 @@ export default function ARVisualizerPage() {
   };
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://cdn.polyhaven.com/asset_img/primary/hamburger.png/model.glb",
-    "apple": "https://cdn.polyhaven.com/asset_img/primary/apple_01.png/model.glb",
-    "avocado": "https://cdn.polyhaven.com/asset_img/primary/avocado.png/model.glb",
-    "tomato": "https://cdn.polyhaven.com/asset_img/primary/tomato.png/model.glb",
-    "potato": "https://cdn.polyhaven.com/asset_img/primary/potato.png/model.glb",
-    "t-shirt": "https://cdn.polyhaven.com/asset_img/primary/t-shirt.png/model.glb",
-    "jeans": "https://cdn.polyhaven.com/asset_img/primary/jeans.png/model.glb",
-    "orange": "https://cdn.polyhaven.com/asset_img/primary/orange.png/model.glb",
-    "banana": "https://cdn.polyhaven.com/asset_img/primary/banana.png/model.glb",
-    "slice of bread": "https://cdn.polyhaven.com/asset_img/primary/bread_sourdough_01.png/model.glb",
-    "egg": "https://cdn.polyhaven.com/asset_img/primary/egg.png/model.glb",
-    "cheese": "https://cdn.polyhaven.com/asset_img/primary/cheese_01.png/model.glb",
-    "chicken meat": "https://cdn.polyhaven.com/asset_img/primary/chicken_leg.png/model.glb",
-    "cup of coffee": "https://cdn.polyhaven.com/asset_img/primary/cup_of_coffee_01.png/model.glb"
+    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046",
+    "apple": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/apple.glb?v=1722450009435",
+    "avocado": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/avocado.glb?v=1722450019289",
+    "tomato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/tomato.glb?v=1722450027986",
+    "potato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/potato.glb?v=1722450035824",
+    "t-shirt": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/t-shirt.glb?v=1722450043831",
+    "jeans": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/jeans.glb?v=1722450051654",
+    "orange": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/orange.glb?v=1722450059345",
+    "banana": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/banana.glb?v=1722450066898",
+    "slice of bread": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/bread.glb?v=1722450074639",
+    "egg": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/egg.glb?v=1722450082725",
+    "cheese": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/cheese.glb?v=1722450091392",
+    "chicken meat": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/chicken.glb?v=1722450099479",
+    "cup of coffee": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/coffee-cup.glb?v=1722450106886"
   };
 
   const getModelUrl = (item: string) => {
