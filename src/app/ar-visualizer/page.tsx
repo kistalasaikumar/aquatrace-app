@@ -34,24 +34,24 @@ export default function ARVisualizerPage() {
   };
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://modelviewer.dev/shared-assets/models/Burger.glb",
-    "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
-    "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
-    "tomato": "https://modelviewer.dev/shared-assets/models/Tomato.glb",
-    "potato": "https://modelviewer.dev/shared-assets/models/Potato.glb",
-    "t-shirt": "https://modelviewer.dev/shared-assets/models/TShirt.glb",
-    "jeans": "https://modelviewer.dev/shared-assets/models/Jeans.glb",
-    "orange": "https://modelviewer.dev/shared-assets/models/Orange.glb",
-    "banana": "https://modelviewer.dev/shared-assets/models/Banana.glb",
-    "slice of bread": "https://modelviewer.dev/shared-assets/models/Bread.glb",
-    "egg": "https://modelviewer.dev/shared-assets/models/Egg.glb",
-    "cheese": "https://modelviewer.dev/shared-assets/models/Cheese.glb",
-    "chicken meat": "https://modelviewer.dev/shared-assets/models/Chicken.glb",
-    "coffee": "https://modelviewer.dev/shared-assets/models/CoffeeMug.glb",
+    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046",
+    "apple": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/apple.glb?v=1722450006364",
+    "avocado": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/avocado.glb?v=1722450008749",
+    "tomato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/tomato.glb?v=1722450011124",
+    "potato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/potato.glb?v=1722450012702",
+    "t-shirt": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/t-shirt.glb?v=1722450015949",
+    "jeans": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/jeans.glb?v=1722450017994",
+    "orange": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/orange.glb?v=1722450020353",
+    "banana": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/banana.glb?v=1722450022291",
+    "slice of bread": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/bread.glb?v=1722450024185",
+    "egg": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/egg.glb?v=1722450026219",
+    "cheese": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/cheese.glb?v=1722450028442",
+    "chicken meat": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/chicken.glb?v=1722450031149",
+    "coffee": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/coffee_mug.glb?v=1722450033108",
   }
 
   const getModelUrl = (item: string) => {
-      return itemToModelMap[item.toLowerCase()] || "https://modelviewer.dev/shared-assets/models/WaterBottle.glb";
+      return itemToModelMap[item.toLowerCase()] || "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/water_bottle.glb?v=1722450035088";
   }
 
   return (
@@ -90,7 +90,6 @@ export default function ARVisualizerPage() {
                 <div className="text-center text-muted-foreground">
                     <Droplets size={48} className="mx-auto mb-4"/>
                     <p>Enter an item above to visualize its water footprint.</p>
-                    <p className="text-sm mt-2">(On mobile, you can tap the AR button to see it in your room!)</p>
                 </div>
             )}
              {loading && (
