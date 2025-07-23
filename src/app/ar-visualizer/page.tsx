@@ -34,17 +34,17 @@ export default function ARVisualizerPage() {
   };
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046",
-    "apple": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/apple.glb?v=1722449758712",
-    "avocado": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Avocado/glTF/Avocado.gltf",
-    "tomato": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Tomato/glTF/Tomato.gltf",
-    "potato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/potato.glb?v=1722449740921",
-    "t-shirt": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/t-shirt.glb?v=1722449910434",
-    "jeans": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/jeans.glb?v=1722449900450",
-    "orange": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/orange.glb?v=1722449764585",
-    "banana": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/banana.glb?v=1722449752341",
-    "slice of bread": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/bread.glb?v=1722449733988",
-    "egg": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/egg.glb?v=1722449727503"
+    "burger": "https://modelviewer.dev/shared-assets/models/Burger.glb",
+    "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
+    "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
+    "tomato": "https://modelviewer.dev/shared-assets/models/Tomato.glb",
+    "potato": "https://modelviewer.dev/shared-assets/models/Potato.glb",
+    "t-shirt": "https://modelviewer.dev/shared-assets/models/TShirt.glb",
+    "jeans": "https://modelviewer.dev/shared-assets/models/Jeans.glb",
+    "orange": "https://modelviewer.dev/shared-assets/models/Orange.glb",
+    "banana": "https://modelviewer.dev/shared-assets/models/Banana.glb",
+    "slice of bread": "https://modelviewer.dev/shared-assets/models/Bread.glb",
+    "egg": "https://modelviewer.dev/shared-assets/models/Egg.glb"
   }
 
   const getModelUrl = (item: string) => {
