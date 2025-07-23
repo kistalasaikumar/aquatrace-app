@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview An AI agent for visualizing virtual water in AR.
@@ -25,13 +26,13 @@ const VIRTUAL_WATER_DATA: Record<string, number> = {
 const itemDetectionTool = ai.defineTool(
     {
         name: 'getItemAndQuantity',
-        description: 'Identifies the item and quantity from a user query about virtual water.',
+        description: 'Identifies the item and quantity from a user query about virtual water. The item must be one of the known items.',
         inputSchema: z.object({
             query: z.string(),
         }),
         outputSchema: z.object({
             item: z.string().describe(`The identified item. Must be one of: ${Object.keys(VIRTUAL_WATER_DATA).join(', ')}`),
-            quantity: z.number(),
+            quantity: z.number().describe('The identified quantity. Defaults to 1 if not specified.'),
         }),
     },
     async ({query}) => {
@@ -65,21 +66,6 @@ export async function visualizeWaterFootprint(input: ARVisualizerInput): Promise
   return arVisualizerFlow(input);
 }
 
-const prompt = ai.definePrompt({
-  name: 'arVisualizerPrompt',
-  input: { schema: ARVisualizerInputSchema },
-  output: { schema: ARVisualizerOutputSchema },
-  tools: [itemDetectionTool],
-  prompt: `You are an AR assistant for AquaTrace. Your goal is to help users visualize the virtual water footprint of everyday items.
-  
-  Use the getItemAndQuantity tool to parse the user's query: {{{query}}}
-  
-  Once you have the item and quantity, calculate the total water footprint. The virtual water for one unit of the identified item is provided by the tool's logic.
-  
-  Finally, provide a concise, one-sentence explanation for the result. For example: "It takes about 7,500 liters of water to produce 3 beef burgers."
-  `,
-});
-
 const arVisualizerFlow = ai.defineFlow(
   {
     name: 'arVisualizerFlow',
@@ -89,7 +75,8 @@ const arVisualizerFlow = ai.defineFlow(
   async (input) => {
     const {toolCalls, toolOutputs} = await ai.generate({
         model: 'googleai/gemini-2.0-flash',
-        prompt: `Parse this query: ${input.query}`,
+        prompt: `You are an AR assistant. Your task is to identify an item and its quantity from the user's query.
+        Use the 'getItemAndQuantity' tool to parse the following query: "${input.query}"`,
         tools: [itemDetectionTool],
         toolConfig: {
           mode: 'required',
