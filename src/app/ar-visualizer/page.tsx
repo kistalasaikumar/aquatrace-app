@@ -11,15 +11,15 @@ import { visualizeWaterFootprint } from '@/ai/flows/ar-visualizer-flow';
 import { ModelViewer } from '@/components/model-viewer';
 
 const presetItems = [
-    { name: '1 burger', icon: Beef, query: '1 burger' },
-    { name: '1 apple', icon: Apple, query: '1 apple' },
     { name: 'A T-Shirt', icon: Shirt, query: 'a t-shirt' },
+    { name: 'An Apple', icon: Apple, query: '1 apple' },
+    { name: 'An Avocado', icon: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11.78 21.84a2.9 2.9 0 0 1-4.06-4.06l6.83-6.83a2.9 2.9 0 0 1 4.06 4.06L11.78 21.84Z"/><path d="M12.5 12.5a2.12 2.12 0 1 0-3-3 2.12 2.12 0 0 0 3 3Z"/><path d="M17.65 17.65 22 22"/></svg> , query: 'an avocado' },
     { name: 'A Cup of Coffee', icon: CupSoda, query: 'a cup of coffee' },
-    { name: 'A pair of Jeans', icon: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 22h2a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2"/><path d="M12 14V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v10"/><path d="M6 14h2a2 2 0 0 0 2-2V4"/></svg> , query: '1 pair of jeans' },
+    { name: 'A Tomato', icon: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15.39 18.33a4.33 4.33 0 1 0-6.12-2.45"/><path d="M13.5 2.5c0 2.48-2.02 4.5-4.5 4.5S4.5 4.98 4.5 2.5"/><path d="M8.33 2.67a6.34 6.34 0 0 0-4.66 4.66"/><path d="M14.63 15.34a2.47 2.47 0 1 1-3.49-3.49 2.47 2.47 0 0 1 3.49 3.49Z"/></svg>, query: 'a tomato' },
 ];
 
 export default function ARVisualizerPage() {
-  const [query, setQuery] = useState('1 burger');
+  const [query, setQuery] = useState('a t-shirt');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ARVisualizerOutput | null>(null);
@@ -51,20 +51,20 @@ export default function ARVisualizerPage() {
   }
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://storage.googleapis.com/fdo-assets/aquatrace/burger.glb",
+    "t-shirt": "https://modelviewer.dev/shared-assets/models/TShirt.glb",
     "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
     "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
+    "cup of coffee": "https://modelviewer.dev/shared-assets/models/CoffeeCup.glb",
     "tomato": "https://modelviewer.dev/shared-assets/models/tomato.glb",
-    "potato": "https://storage.googleapis.com/fdo-assets/aquatrace/potato.glb",
-    "t-shirt": "https://modelviewer.dev/shared-assets/models/TShirt.glb",
-    "jeans": "https://storage.googleapis.com/fdo-assets/aquatrace/jeans.glb",
-    "orange": "https://storage.googleapis.com/fdo-assets/aquatrace/orange.glb",
-    "banana": "https://storage.googleapis.com/fdo-assets/aquatrace/banana.glb",
-    "slice of bread": "https://storage.googleapis.com/fdo-assets/aquatrace/bread.glb",
-    "egg": "https://storage.googleapis.com/fdo-assets/aquatrace/egg.glb",
-    "cheese": "https://storage.googleapis.com/fdo-assets/aquatrace/cheese.glb",
-    "chicken meat": "https://storage.googleapis.com/fdo-assets/aquatrace/chicken.glb",
-    "cup of coffee": "https://modelviewer.dev/shared-assets/models/CoffeeCup.glb"
+    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046", // This is a known good burger model
+    "jeans": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/jeans.glb?v=1722450022416", // Known good jeans model
+    "orange": "https://modelviewer.dev/shared-assets/models/Orange.glb",
+    "banana": "https://modelviewer.dev/shared-assets/models/Banana.glb",
+    "slice of bread": "https://modelviewer.dev/shared-assets/models/Bread.glb",
+    "egg": "https://modelviewer.dev/shared-assets/models/Egg.glb",
+    "cheese": "https://modelviewer.dev/shared-assets/models/Cheese.glb",
+    "chicken meat": "https://modelviewer.dev/shared-assets/models/Chicken.glb",
+    "potato": "https://modelviewer.dev/shared-assets/models/Potato.glb",
   };
 
   const getModelUrl = (item: string) => {
