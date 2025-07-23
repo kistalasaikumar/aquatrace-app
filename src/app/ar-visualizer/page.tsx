@@ -51,20 +51,20 @@ export default function ARVisualizerPage() {
   }
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://modelviewer.dev/shared-assets/models/hamburger.glb",
-    "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
+    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046",
+    "apple": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/apple.glb?v=1722450009435",
     "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
     "tomato": "https://modelviewer.dev/shared-assets/models/tomato.glb",
-    "potato": "https://modelviewer.dev/shared-assets/models/potato.glb",
-    "t-shirt": "https://modelviewer.dev/shared-assets/models/TShirt.glb",
-    "jeans": "https://modelviewer.dev/shared-assets/models/Jeans.glb",
-    "orange": "https://modelviewer.dev/shared-assets/models/Orange.glb",
-    "banana": "https://modelviewer.dev/shared-assets/models/banana.glb",
-    "slice of bread": "https://modelviewer.dev/shared-assets/models/bread-slice.glb",
-    "egg": "https://modelviewer.dev/shared-assets/models/egg.glb",
-    "cheese": "https://modelviewer.dev/shared-assets/models/cheese.glb",
-    "chicken meat": "https://modelviewer.dev/shared-assets/models/chicken.glb",
-    "cup of coffee": "https://modelviewer.dev/shared-assets/models/cup.glb"
+    "potato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/potato.glb?v=1722450024972",
+    "t-shirt": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/t-shirt.glb?v=1722450013229",
+    "jeans": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/jeans.glb?v=1722450020436",
+    "orange": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/orange.glb?v=1722450022839",
+    "banana": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/banana.glb?v=1722450029891",
+    "slice of bread": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/bread.glb?v=1722450017593",
+    "egg": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/egg.glb?v=1722450033037",
+    "cheese": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/cheese.glb?v=1722450035348",
+    "chicken meat": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/chicken.glb?v=1722450038198",
+    "cup of coffee": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/coffee_cup.glb?v=1722450005234"
   };
 
   const getModelUrl = (item: string) => {
