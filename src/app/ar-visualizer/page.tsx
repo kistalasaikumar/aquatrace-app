@@ -34,9 +34,13 @@ export default function ARVisualizerPage() {
   };
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://modelviewer.dev/shared-assets/models/Burger.glb",
+    "burger": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Food_Burger/glTF/Food_Burger.gltf",
     "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
-    // Add other model mappings here
+    "avocado": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Avocado/glTF/Avocado.gltf",
+    "tomato": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Tomato/glTF/Tomato.gltf",
+    "potato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/potato.glb?v=1722449740921",
+    "t-shirt": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/t-shirt.glb?v=1722449910434",
+    "jeans": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/jeans.glb?v=1722449900450"
   }
 
   const getModelUrl = (item: string) => {
@@ -79,6 +83,7 @@ export default function ARVisualizerPage() {
                 <div className="text-center text-muted-foreground">
                     <Droplets size={48} className="mx-auto mb-4"/>
                     <p>Enter an item above to visualize its water footprint.</p>
+                    <p className="text-sm mt-2">(On mobile, you can tap the AR button to see it in your room!)</p>
                 </div>
             )}
              {loading && (

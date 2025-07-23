@@ -21,6 +21,11 @@ const VIRTUAL_WATER_DATA: Record<string, number> = {
     "cup of coffee": 140,
     "t-shirt": 2700,
     "jeans": 7570,
+    "avocado": 227,
+    "tomato": 214,
+    "potato": 287,
+    "cheese": 3178, // 1kg
+    "chicken meat": 4325, // 1kg
 };
 
 export async function visualizeWaterFootprint(input: ARVisualizerInput): Promise<ARVisualizerOutput> {
