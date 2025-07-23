@@ -34,24 +34,24 @@ export default function ARVisualizerPage() {
   };
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://modelviewer.dev/shared-assets/models/hamburger.glb",
-    "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
-    "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
-    "tomato": "https://modelviewer.dev/shared-assets/models/Tomato.glb",
-    "potato": "https://modelviewer.dev/shared-assets/models/potato/Potato.glb",
-    "t-shirt": "https://modelviewer.dev/shared-assets/models/TShirt.glb",
-    "jeans": "https://modelviewer.dev/shared-assets/models/jeans.glb",
-    "orange": "https://modelviewer.dev/shared-assets/models/orange.glb",
-    "banana": "https://modelviewer.dev/shared-assets/models/banana.glb",
-    "slice of bread": "https://modelviewer.dev/shared-assets/models/bread-slice.glb",
-    "egg": "https://modelviewer.dev/shared-assets/models/egg.glb",
-    "cheese": "https://modelviewer.dev/shared-assets/models/cheese.glb",
-    "chicken meat": "https://modelviewer.dev/shared-assets/models/chicken.glb",
-    "cup of coffee": "https://modelviewer.dev/shared-assets/models/cup.glb"
+    "burger": "https://sketchfab.com/models/06c53046a0a84e688c224b136894b595/embed?autostart=1&preload=1&ui_theme=dark",
+    "apple": "https://sketchfab.com/models/241d7355b25243179532aad9a7def95b/embed?autostart=1&preload=1&ui_theme=dark",
+    "avocado": "https://sketchfab.com/models/b3399a91244242e78746c07149a46452/embed?autostart=1&preload=1&ui_theme=dark",
+    "tomato": "https://sketchfab.com/models/30a54e17e0894e63989c45053b91a27f/embed?autostart=1&preload=1&ui_theme=dark",
+    "potato": "https://sketchfab.com/models/f527b3b5a7614e599b867e415309c855/embed?autostart=1&preload=1&ui_theme=dark",
+    "t-shirt": "https://sketchfab.com/models/120531289133458ca6c5b9658b0933f2/embed?autostart=1&preload=1&ui_theme=dark",
+    "jeans": "https://sketchfab.com/models/f7203b60f16e431cadf8b5357801a41e/embed?autostart=1&preload=1&ui_theme=dark",
+    "orange": "https://sketchfab.com/models/3ab7ab3f344f419b9d80196ac56dfc40/embed?autostart=1&preload=1&ui_theme=dark",
+    "banana": "https://sketchfab.com/models/6b36070a72c14828b185361327117184/embed?autostart=1&preload=1&ui_theme=dark",
+    "slice of bread": "https://sketchfab.com/models/19396e6a8d6745f487405eba0313a5e8/embed?autostart=1&preload=1&ui_theme=dark",
+    "egg": "https://sketchfab.com/models/018e690a61c348f9a56588a41b2c4e23/embed?autostart=1&preload=1&ui_theme=dark",
+    "cheese": "https://sketchfab.com/models/e40ff580132b43b8908f0a454d4b1b9e/embed?autostart=1&preload=1&ui_theme=dark",
+    "chicken meat": "https://sketchfab.com/models/4d0a1b80c51944589f41de5132a26514/embed?autostart=1&preload=1&ui_theme=dark",
+    "cup of coffee": "https://sketchfab.com/models/a5113d098e944b6e8d1234907a75d55a/embed?autostart=1&preload=1&ui_theme=dark"
   };
 
   const getModelUrl = (item: string) => {
-      return itemToModelMap[item.toLowerCase()] || "https://modelviewer.dev/shared-assets/models/WaterBottle.glb";
+      return itemToModelMap[item.toLowerCase()] || "https://sketchfab.com/models/06c53046a0a84e688c224b136894b595/embed?autostart=1&preload=1&ui_theme=dark";
   }
 
   return (
@@ -100,11 +100,13 @@ export default function ARVisualizerPage() {
             )}
             {result && (
               <div className="w-full h-full flex flex-col items-center justify-center text-center animate-in fade-in-50 duration-500">
-                  <ModelViewer
+                  <iframe 
                     src={getModelUrl(result.item)}
-                    itemScale={result.quantity}
-                    alt={`3D model of ${result.item}`}
-                  />
+                    title={result.item}
+                    allow="autoplay; fullscreen; vr"
+                    allowFullScreen
+                    style={{width: '100%', height: '400px', border: 0}}
+                  ></iframe>
                   <h3 className="text-2xl font-bold mt-4">{result.totalWater.toLocaleString()} Liters</h3>
                   <p className="text-muted-foreground">{result.explanation}</p>
                    <div className="mt-4 flex items-center gap-2 rounded-md bg-accent p-3 text-sm text-accent-foreground">
@@ -119,3 +121,5 @@ export default function ARVisualizerPage() {
     </main>
   );
 }
+
+    
