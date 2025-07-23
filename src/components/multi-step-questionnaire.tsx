@@ -509,13 +509,24 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
                                     <Checkbox
                                       checked={field.value?.includes(item.id)}
                                       onCheckedChange={(checked) => {
-                                        return checked
-                                          ? field.onChange([...field.value, item.id])
-                                          : field.onChange(
-                                              field.value?.filter(
-                                                (value) => value !== item.id
-                                              )
-                                            )
+                                        let newValue: string[] = [...field.value];
+
+                                        if (checked) {
+                                          if (item.id === 'none') {
+                                            newValue = ['none'];
+                                          } else {
+                                            newValue.push(item.id);
+                                            newValue = newValue.filter(v => v !== 'none');
+                                          }
+                                        } else {
+                                          newValue = newValue.filter(
+                                            (value) => value !== item.id
+                                          );
+                                          if (newValue.length === 0) {
+                                              newValue = ['none'];
+                                          }
+                                        }
+                                        field.onChange(newValue);
                                       }}
                                     />
                                   </FormControl>
