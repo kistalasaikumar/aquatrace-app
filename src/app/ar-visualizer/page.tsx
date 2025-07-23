@@ -52,11 +52,11 @@ export default function ARVisualizerPage() {
 
   const itemToModelMap: Record<string, string> = {
     "burger": "https://storage.googleapis.com/fdo-assets/aquatrace/burger.glb",
-    "apple": "https://storage.googleapis.com/fdo-assets/aquatrace/apple.glb",
+    "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
     "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
     "tomato": "https://modelviewer.dev/shared-assets/models/tomato.glb",
     "potato": "https://storage.googleapis.com/fdo-assets/aquatrace/potato.glb",
-    "t-shirt": "https://storage.googleapis.com/fdo-assets/aquatrace/t-shirt.glb",
+    "t-shirt": "https://modelviewer.dev/shared-assets/models/TShirt.glb",
     "jeans": "https://storage.googleapis.com/fdo-assets/aquatrace/jeans.glb",
     "orange": "https://storage.googleapis.com/fdo-assets/aquatrace/orange.glb",
     "banana": "https://storage.googleapis.com/fdo-assets/aquatrace/banana.glb",
@@ -64,7 +64,7 @@ export default function ARVisualizerPage() {
     "egg": "https://storage.googleapis.com/fdo-assets/aquatrace/egg.glb",
     "cheese": "https://storage.googleapis.com/fdo-assets/aquatrace/cheese.glb",
     "chicken meat": "https://storage.googleapis.com/fdo-assets/aquatrace/chicken.glb",
-    "cup of coffee": "https://storage.googleapis.com/fdo-assets/aquatrace/coffee_cup.glb"
+    "cup of coffee": "https://modelviewer.dev/shared-assets/models/CoffeeCup.glb"
   };
 
   const getModelUrl = (item: string) => {
