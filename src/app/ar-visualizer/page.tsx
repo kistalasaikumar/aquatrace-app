@@ -51,20 +51,20 @@ export default function ARVisualizerPage() {
   }
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046",
-    "apple": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/apple.glb?v=1722450009435",
+    "burger": "https://storage.googleapis.com/fdo-assets/aquatrace/burger.glb",
+    "apple": "https://storage.googleapis.com/fdo-assets/aquatrace/apple.glb",
     "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
     "tomato": "https://modelviewer.dev/shared-assets/models/tomato.glb",
-    "potato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/potato.glb?v=1722450024972",
-    "t-shirt": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/t-shirt.glb?v=1722450013229",
-    "jeans": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/jeans.glb?v=1722450020436",
-    "orange": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/orange.glb?v=1722450022839",
-    "banana": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/banana.glb?v=1722450029891",
-    "slice of bread": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/bread.glb?v=1722450017593",
-    "egg": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/egg.glb?v=1722450033037",
-    "cheese": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/cheese.glb?v=1722450035348",
-    "chicken meat": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/chicken.glb?v=1722450038198",
-    "cup of coffee": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/coffee_cup.glb?v=1722450005234"
+    "potato": "https://storage.googleapis.com/fdo-assets/aquatrace/potato.glb",
+    "t-shirt": "https://storage.googleapis.com/fdo-assets/aquatrace/t-shirt.glb",
+    "jeans": "https://storage.googleapis.com/fdo-assets/aquatrace/jeans.glb",
+    "orange": "https://storage.googleapis.com/fdo-assets/aquatrace/orange.glb",
+    "banana": "https://storage.googleapis.com/fdo-assets/aquatrace/banana.glb",
+    "slice of bread": "https://storage.googleapis.com/fdo-assets/aquatrace/bread.glb",
+    "egg": "https://storage.googleapis.com/fdo-assets/aquatrace/egg.glb",
+    "cheese": "https://storage.googleapis.com/fdo-assets/aquatrace/cheese.glb",
+    "chicken meat": "https://storage.googleapis.com/fdo-assets/aquatrace/chicken.glb",
+    "cup of coffee": "https://storage.googleapis.com/fdo-assets/aquatrace/coffee_cup.glb"
   };
 
   const getModelUrl = (item: string) => {
