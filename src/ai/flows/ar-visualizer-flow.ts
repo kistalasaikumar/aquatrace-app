@@ -23,48 +23,14 @@ const VIRTUAL_WATER_DATA: Record<string, number> = {
     "jeans": 7570,
 };
 
-const itemDetectionTool = ai.defineTool(
-    {
-        name: 'getItemAndQuantity',
-        description: 'Identifies the item and quantity from a user query about virtual water. The item must be one of the known items.',
-        inputSchema: z.object({
-            query: z.string(),
-        }),
-        outputSchema: z.object({
-            item: z.string().describe(`The identified item. Must be one of: ${Object.keys(VIRTUAL_WATER_DATA).join(', ')}`),
-            quantity: z.number().describe('The identified quantity. Defaults to 1 if not specified.'),
-        }),
-    },
-    async ({query}) => {
-        // This is a simplified implementation. A real implementation would use a more robust NLP model.
-        const words = query.toLowerCase().split(' ');
-        let item = '';
-        let quantity = 1;
-
-        for (const word of words) {
-            const singularWord = word.endsWith('s') ? word.slice(0, -1) : word;
-            if (VIRTUAL_WATER_DATA[singularWord]) {
-                item = singularWord;
-            }
-        }
-        
-        const numberMatch = query.match(/\d+/);
-        if (numberMatch) {
-            quantity = parseInt(numberMatch[0], 10);
-        }
-
-        if (!item) {
-           throw new Error("Could not identify a valid item in the query.");
-        }
-
-        return { item, quantity };
-    }
-);
-
-
 export async function visualizeWaterFootprint(input: ARVisualizerInput): Promise<ARVisualizerOutput> {
   return arVisualizerFlow(input);
 }
+
+const ItemAndQuantitySchema = z.object({
+    item: z.string().describe(`The identified item. Must be one of: ${Object.keys(VIRTUAL_WATER_DATA).join(', ')}`),
+    quantity: z.number().describe('The identified quantity. Defaults to 1 if not specified.'),
+});
 
 const arVisualizerFlow = ai.defineFlow(
   {
@@ -73,22 +39,23 @@ const arVisualizerFlow = ai.defineFlow(
     outputSchema: ARVisualizerOutputSchema,
   },
   async (input) => {
-    const {toolCalls, toolOutputs} = await ai.generate({
+    const { output } = await ai.generate({
         model: 'googleai/gemini-2.0-flash',
-        prompt: `You are an AR assistant. Your task is to identify an item and its quantity from the user's query.
-        Use the 'getItemAndQuantity' tool to parse the following query: "${input.query}"`,
-        tools: [itemDetectionTool],
-        toolConfig: {
-          mode: 'required',
-          requiredTool: 'getItemAndQuantity',
-        }
+        prompt: `From the user query, identify the item and its quantity.
+        The item must be one of the following: ${Object.keys(VIRTUAL_WATER_DATA).join(', ')}.
+        If no quantity is specified, assume the quantity is 1.
+
+        User Query: "${input.query}"`,
+        output: {
+            schema: ItemAndQuantitySchema,
+        },
     });
 
-    if (!toolCalls || toolCalls.length === 0 || !toolOutputs || toolOutputs.length === 0) {
-        throw new Error("The model did not call the required tool.");
+    if (!output) {
+      throw new Error("Could not extract item and quantity from the query.");
     }
     
-    const { item, quantity } = itemDetectionTool.getOutput(toolOutputs[0]);
+    const { item, quantity } = output;
 
     if (!item || !VIRTUAL_WATER_DATA[item]) {
       throw new Error(`Could not find water data for item: ${item}`);
