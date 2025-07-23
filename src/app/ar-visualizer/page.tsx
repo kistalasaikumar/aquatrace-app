@@ -34,8 +34,8 @@ export default function ARVisualizerPage() {
   };
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Buggy/glTF/Buggy.gltf",
-    "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
+    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046",
+    "apple": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/apple.glb?v=1722449997194",
     "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
     "tomato": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Tomato/glTF/Tomato.gltf",
     "potato": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Potato/glTF/Potato.gltf",
