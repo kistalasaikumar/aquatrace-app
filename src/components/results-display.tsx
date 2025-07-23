@@ -45,7 +45,7 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
                 <p className="text-sm text-muted-foreground">Total Daily Footprint</p>
                 <p className="text-4xl lg:text-5xl font-bold text-primary">
                   {results.totalFootprint.toLocaleString()}
-                  <span className="text-xl font-medium text-muted-foreground ml-2">gallons</span>
+                  <span className="text-xl font-medium text-muted-foreground ml-2">liters</span>
                 </p>
               </div>
               <ChartContainer config={chartConfig} className="mx-auto aspect-square h-[250px]">

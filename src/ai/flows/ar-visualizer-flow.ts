@@ -9,16 +9,17 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { ARVisualizerInputSchema, ARVisualizerOutputSchema, type ARVisualizerInput, type ARVisualizerOutput } from './ar-visualizer-schema';
 
+// Values in Liters
 const VIRTUAL_WATER_DATA: Record<string, number> = {
-    "burger": 660, // Average for a quarter-pound beef burger in gallons
-    "apple": 25,
-    "orange": 22,
-    "banana": 27,
-    "slice of bread": 11,
-    "egg": 53,
-    "cup of coffee": 37,
-    "t-shirt": 713,
-    "jeans": 2000,
+    "burger": 2500, // Average for a quarter-pound beef burger
+    "apple": 95,
+    "orange": 83,
+    "banana": 102,
+    "slice of bread": 42,
+    "egg": 200,
+    "cup of coffee": 140,
+    "t-shirt": 2700,
+    "jeans": 7570,
 };
 
 const itemDetectionTool = ai.defineTool(
@@ -75,7 +76,7 @@ const prompt = ai.definePrompt({
   
   Once you have the item and quantity, calculate the total water footprint. The virtual water for one unit of the identified item is provided by the tool's logic.
   
-  Finally, provide a concise, one-sentence explanation for the result. For example: "It takes about 1,980 gallons of water to produce 3 beef burgers."
+  Finally, provide a concise, one-sentence explanation for the result. For example: "It takes about 7,500 liters of water to produce 3 beef burgers."
   `,
 });
 
@@ -108,7 +109,7 @@ const arVisualizerFlow = ai.defineFlow(
 
     const totalWater = VIRTUAL_WATER_DATA[item] * quantity;
 
-    const explanation = `It takes approximately ${totalWater.toLocaleString()} gallons of virtual water to produce ${quantity} ${item}(s).`;
+    const explanation = `It takes approximately ${totalWater.toLocaleString()} liters of virtual water to produce ${quantity} ${item}(s).`;
 
     return {
       item,

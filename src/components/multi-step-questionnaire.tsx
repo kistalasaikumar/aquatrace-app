@@ -16,14 +16,21 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Loader2, Users, ShowerHead, MapPin, Droplets, ArrowLeft, Beef, Leaf, Building, Home, Mountain, Recycle, Car, Ban, Wind, Waves } from 'lucide-react';
-import type { WaterFootprintAnalysisInput, ExtendedWaterFootprintAnalysisInput } from '@/ai/flows/generate-water-saving-tips';
+import { Loader2, Users, ShowerHead, Droplets, ArrowLeft, Beef, Leaf, Building, Home, Mountain, Recycle, Car, Ban, Wind, Waves } from 'lucide-react';
+import type { ExtendedWaterFootprintAnalysisInput } from '@/ai/flows/generate-water-saving-tips';
 import { Slider } from './ui/slider';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Progress } from './ui/progress';
 import { DUAL_FLUSH_ICON, LOW_FLOW_ICON, STANDARD_FLUSH_ICON, MOTORCYCLE_ICON } from './icons';
 import { cn } from '@/lib/utils';
 import { Switch } from './ui/switch';
+import { Checkbox } from './ui/checkbox';
+
+const vehicleOptions = [
+  { id: 'none', label: 'None', icon: Ban },
+  { id: 'car', label: 'Car', icon: Car },
+  { id: 'motorcycle', label: 'Motorcycle', icon: MOTORCYCLE_ICON },
+] as const;
 
 const formSchema = z.object({
   // Step 1: Household Habits
@@ -44,10 +51,9 @@ const formSchema = z.object({
   // Step 3: Consumption Patterns
   dishwashingMethod: z.string(),
   laundryFrequency: z.string(), // Changed from number to string for radio group
-  vehicleOwnership: z.string(),
+  vehicleOwnership: z.array(z.string()),
   hasSwimmingPool: z.boolean(),
   userName: z.string().min(1, 'Please enter your name for the leaderboard'),
-  location: z.string().min(2, 'Please enter a valid location.'),
 });
 
 interface MultiStepQuestionnaireProps {
@@ -76,10 +82,9 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
       // Step 3
       dishwashingMethod: "Dishwasher",
       laundryFrequency: "Weekly",
-      vehicleOwnership: "None",
+      vehicleOwnership: ["none"],
       hasSwimmingPool: false,
       userName: "",
-      location: 'New York, USA',
     },
   });
 
@@ -101,7 +106,6 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
         showerTime: data.showerTime,
         laundryFrequency: laundryFrequencyMap[data.laundryFrequency] || 2,
         outdoorWatering: outdoorWatering,
-        location: data.location,
         userName: data.userName,
     }
     onSubmit(submissionData);
@@ -484,29 +488,49 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
                     />
                 </div>
                 <FormField
-                    control={form.control}
-                    name="vehicleOwnership"
-                    render={({ field }) => (
+                  control={form.control}
+                  name="vehicleOwnership"
+                  render={() => (
                     <FormItem>
-                        <FormLabel>Vehicle Ownership</FormLabel>
-                        <FormControl>
-                            <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex items-center gap-4 pt-2">
-                                <FormItem className="flex items-center space-x-2 space-y-0">
-                                    <RadioGroupItem value="None" />
-                                    <FormLabel className="font-normal flex items-center gap-1.5"><Ban size={16}/> None</FormLabel>
+                      <FormLabel>Vehicle Ownership</FormLabel>
+                       <div className="flex items-center gap-4 pt-2">
+                        {vehicleOptions.map((item) => (
+                          <FormField
+                            key={item.id}
+                            control={form.control}
+                            name="vehicleOwnership"
+                            render={({ field }) => {
+                              return (
+                                <FormItem
+                                  key={item.id}
+                                  className="flex flex-row items-start space-x-3 space-y-0"
+                                >
+                                  <FormControl>
+                                    <Checkbox
+                                      checked={field.value?.includes(item.id)}
+                                      onCheckedChange={(checked) => {
+                                        return checked
+                                          ? field.onChange([...field.value, item.id])
+                                          : field.onChange(
+                                              field.value?.filter(
+                                                (value) => value !== item.id
+                                              )
+                                            )
+                                      }}
+                                    />
+                                  </FormControl>
+                                  <FormLabel className="font-normal flex items-center gap-1.5">
+                                    <item.icon size={16} /> {item.label}
+                                  </FormLabel>
                                 </FormItem>
-                                <FormItem className="flex items-center space-x-2 space-y-0">
-                                    <RadioGroupItem value="Car" />
-                                    <FormLabel className="font-normal flex items-center gap-1.5"><Car size={16}/> Car</FormLabel>
-                                </FormItem>
-                                <FormItem className="flex items-center space-x-2 space-y-0">
-                                    <RadioGroupItem value="Motorcycle" />
-                                    <FormLabel className="font-normal flex items-center gap-1.5"><MOTORCYCLE_ICON className="h-4 w-4"/> Motorcycle</FormLabel>
-                                </FormItem>
-                            </RadioGroup>
-                        </FormControl>
+                              )
+                            }}
+                          />
+                        ))}
+                      </div>
+                      <FormMessage />
                     </FormItem>
-                    )}
+                  )}
                 />
                  <FormField
                     control={form.control}
@@ -537,20 +561,6 @@ export function MultiStepQuestionnaire({ onSubmit, isLoading }: MultiStepQuestio
                         <FormControl>
                             <Input placeholder="Enter your name" {...field} />
                         </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                    )}
-                />
-                 <FormField
-                    control={form.control}
-                    name="location"
-                    render={({ field }) => (
-                    <FormItem>
-                        <FormLabel className="flex items-center gap-2"><MapPin className="w-4 h-4" /> Your Location</FormLabel>
-                        <FormControl>
-                        <Input placeholder="e.g., City, Country" {...field} />
-                        </FormControl>
-                        <FormDescription>Helps tailor tips to your region.</FormDescription>
                         <FormMessage />
                     </FormItem>
                     )}

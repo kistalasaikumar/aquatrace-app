@@ -94,7 +94,7 @@ export default function ARVisualizerPage() {
                     itemScale={result.quantity}
                     alt={`3D model of ${result.item}`}
                   />
-                  <h3 className="text-2xl font-bold mt-4">{result.totalWater.toLocaleString()} Gallons</h3>
+                  <h3 className="text-2xl font-bold mt-4">{result.totalWater.toLocaleString()} Liters</h3>
                   <p className="text-muted-foreground">{result.explanation}</p>
               </div>
             )}

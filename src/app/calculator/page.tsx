@@ -24,18 +24,22 @@ export default function AquaTracePage() {
       const tipsOutput: WaterSavingTipsOutput = await getWaterSavingTipsAction(data);
       
       const dietWaterMap: {[key: string]: number} = {
-        'vegan': 300,
-        'vegetarian': 400,
-        'meat eater': 600,
+        'vegan': 1135, // 300 gallons
+        'vegetarian': 1514, // 400 gallons
+        'meat eater': 2271, // 600 gallons
       };
-      const dietWater = dietWaterMap[data.dietType.toLowerCase()] || 500;
+      const dietWater = dietWaterMap[data.dietType.toLowerCase()] || 1893;
       
-      const householdWater = data.showerTime * 2.5 * data.householdSize + data.laundryFrequency * 30;
-      const outdoorWater = data.outdoorWatering.toLowerCase().includes('daily') ? 150 : (data.outdoorWatering.toLowerCase().includes('never') ? 0 : 75);
+      // shower: 2.5 gal/min -> 9.46 l/min. laundry: 30 gal/load -> 113.5 l/load
+      const householdWater = data.showerTime * 9.46 * data.householdSize + data.laundryFrequency * 113.5;
+      // daily: 150gal -> 568l, other: 75gal -> 284l
+      const outdoorWater = data.outdoorWatering.toLowerCase().includes('daily') ? 568 : (data.outdoorWatering.toLowerCase().includes('never') ? 0 : 284);
       const totalFootprint = Math.round(dietWater + householdWater + outdoorWater);
 
       const getAquaPoints = (footprint: number) => {
-          return Math.max(0, Math.round(10000 - footprint * 5));
+          // Adjusted for liters. Original was 10000 - footprint_gal * 5
+          // New is 10000 - (footprint_liters / 3.785) * 5
+          return Math.max(0, Math.round(10000 - (totalFootprint / 3.785) * 5));
       }
       
       const currentUserScore = getAquaPoints(totalFootprint);

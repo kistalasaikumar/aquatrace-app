@@ -32,11 +32,6 @@ const WaterFootprintAnalysisInputSchema = z.object({
     .describe(
       'Information on outdoor watering habits, detailing the frequency and duration of watering gardens or lawns, which impacts external water usage.'
     ),
-  location: z
-    .string()
-    .describe(
-      'The general location of the user (City, Country). This helps in understanding water availability and regional water consumption patterns.'
-    ),
 });
 
 export type WaterFootprintAnalysisInput = z.infer<
@@ -74,7 +69,6 @@ const prompt = ai.definePrompt({
   Shower Time (minutes): {{{showerTime}}}
   Laundry Frequency (loads per week): {{{laundryFrequency}}}
   Outdoor Watering Habits: {{{outdoorWatering}}}
-  Location: {{{location}}}
 
   Provide specific, actionable tips tailored to the user's situation. Focus on high-impact changes that can significantly reduce their water footprint.
   Include tips related to:
@@ -84,7 +78,7 @@ const prompt = ai.definePrompt({
   - Reducing water usage in the yard and garden (e.g., watering deeply but less frequently, using drought-tolerant plants).
   - Adjusting dietary choices to reduce water footprint (e.g., eating less meat, choosing locally sourced foods).
 
-  The tips should be clear, concise, and easy to implement. The tips should be appropriate and applicable to the user's location. Ensure they are relevant to the user's lifestyle and habits.
+  The tips should be clear, concise, and easy to implement. The tips should be appropriate and applicable to the user's lifestyle and habits.
 
   Format the tips as a bulleted list.
   `,
