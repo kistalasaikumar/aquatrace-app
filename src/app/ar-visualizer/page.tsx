@@ -35,7 +35,7 @@ export default function ARVisualizerPage() {
 
   const itemToModelMap: Record<string, string> = {
     "burger": "https://modelviewer.dev/shared-assets/models/Burger.glb",
-    "apple": "https://modelviewer.dev/shared-assets/models/apple.glb",
+    "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
     // Add other model mappings here
   }
 
