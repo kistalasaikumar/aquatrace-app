@@ -51,20 +51,20 @@ export default function ARVisualizerPage() {
   }
 
   const itemToModelMap: Record<string, string> = {
-    "t-shirt": "https://modelviewer.dev/shared-assets/models/TShirt.glb",
-    "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
-    "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
-    "cup of coffee": "https://modelviewer.dev/shared-assets/models/CoffeeCup.glb",
-    "tomato": "https://modelviewer.dev/shared-assets/models/Tomato.glb",
-    "burger": "https://modelviewer.dev/shared-assets/models/hamburger.glb",
-    "jeans": "https://modelviewer.dev/shared-assets/models/Jeans.glb",
-    "orange": "https://modelviewer.dev/shared-assets/models/Orange.glb",
-    "banana": "https://modelviewer.dev/shared-assets/models/Banana.glb",
-    "slice of bread": "https://modelviewer.dev/shared-assets/models/Slice.glb",
-    "egg": "https://modelviewer.dev/shared-assets/models/Chicken.glb", // Placeholder, no egg model
-    "cheese": "https://modelviewer.dev/shared-assets/models/Cheese.glb",
-    "chicken meat": "https://modelviewer.dev/shared-assets/models/Chicken.glb",
-    "potato": "https://modelviewer.dev/shared-assets/models/Potato.glb",
+    "t-shirt": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/t-shirt.glb?v=1722450035123",
+    "apple": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/apple.glb?v=1722450009435",
+    "avocado": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/avocado.glb?v=1722450013589",
+    "cup of coffee": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/cup-of-coffee.glb?v=1722450018596",
+    "tomato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/tomato.glb?v=1722450039201",
+    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046",
+    "jeans": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/jeans.glb?v=1722450022036",
+    "orange": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/orange.glb?v=1722450025992",
+    "banana": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/banana.glb?v=1722449996720",
+    "slice of bread": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/slice-of-bread.glb?v=1722450031850",
+    "egg": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/egg.glb?v=1722450019972",
+    "cheese": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/cheese.glb?v=1722450017044",
+    "chicken meat": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/chicken.glb?v=1722450004907",
+    "potato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/potato.glb?v=1722450028717",
   };
 
   const getModelUrl = (item: string) => {
