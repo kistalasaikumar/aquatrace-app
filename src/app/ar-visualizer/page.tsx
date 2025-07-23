@@ -34,20 +34,20 @@ export default function ARVisualizerPage() {
   };
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://modelviewer.dev/shared-assets/models/Burger.glb",
-    "apple": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Apple/glTF/Apple.gltf",
-    "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
-    "tomato": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Tomato/glTF/Tomato.gltf",
-    "potato": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Potato/glTF/Potato.gltf",
-    "t-shirt": "https://modelviewer.dev/shared-assets/models/TShirt.glb",
-    "jeans": "https://modelviewer.dev/shared-assets/models/Jeans.glb",
-    "orange": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Orange/glTF/Orange.gltf",
-    "banana": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Banana/glTF/Banana.gltf",
-    "slice of bread": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Bread/glTF/Bread.gltf",
-    "egg": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Chicken/glTF/Chicken.gltf", // Using chicken as placeholder
-    "cheese": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Cheese/glTF/Cheese.gltf",
-    "chicken meat": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Chicken/glTF/Chicken.gltf",
-    "cup of coffee": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/BarramundiFish/glTF/BarramundiFish.gltf", // Placeholder
+    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046",
+    "apple": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/apple.glb?v=1722449997486",
+    "avocado": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/avocado.glb?v=1722449998144",
+    "tomato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/tomato.glb?v=1722450012975",
+    "potato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/potato.glb?v=1722450008083",
+    "t-shirt": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/t-shirt.glb?v=1722450012229",
+    "jeans": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/jeans.glb?v=1722450004944",
+    "orange": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/orange.glb?v=1722450007279",
+    "banana": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/banana.glb?v=1722449999127",
+    "slice of bread": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/bread.glb?v=1722450000329",
+    "egg": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/egg.glb?v=1722450002888",
+    "cheese": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/cheese.glb?v=1722450001757",
+    "chicken meat": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/chicken.glb?v=1722450002279",
+    "cup of coffee": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/coffee_cup.glb?v=1722450003923"
   }
 
   const getModelUrl = (item: string) => {
