@@ -34,7 +34,7 @@ export default function ARVisualizerPage() {
   };
 
   const itemToModelMap: Record<string, string> = {
-    "burger": "https://cdn.glitch.com/36cb8393-65c6-408d-a538-055ada20431b/hamburger.glb?v=1542146433444",
+    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046",
     "apple": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/apple.glb?v=1722449758712",
     "avocado": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Avocado/glTF/Avocado.gltf",
     "tomato": "https://modelviewer.dev/shared-assets/models/glTF-Sample-Models/2.0/Tomato/glTF/Tomato.gltf",
@@ -113,3 +113,5 @@ export default function ARVisualizerPage() {
     </main>
   );
 }
+
+    
