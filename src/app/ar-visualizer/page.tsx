@@ -13,9 +13,9 @@ import { ModelViewer } from '@/components/model-viewer';
 const presetItems = [
     { name: 'A T-Shirt', icon: Shirt, query: 'a t-shirt' },
     { name: 'An Apple', icon: Apple, query: '1 apple' },
-    { name: 'An Avocado', icon: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11.78 21.84a2.9 2.9 0 0 1-4.06-4.06l6.83-6.83a2.9 2.9 0 0 1 4.06 4.06L11.78 21.84Z"/><path d="M12.5 12.5a2.12 2.12 0 1 0-3-3 2.12 2.12 0 0 0 3 3Z"/><path d="M17.65 17.65 22 22"/></svg> , query: 'an avocado' },
     { name: 'A Cup of Coffee', icon: CupSoda, query: 'a cup of coffee' },
-    { name: 'A Tomato', icon: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15.39 18.33a4.33 4.33 0 1 0-6.12-2.45"/><path d="M13.5 2.5c0 2.48-2.02 4.5-4.5 4.5S4.5 4.98 4.5 2.5"/><path d="M8.33 2.67a6.34 6.34 0 0 0-4.66 4.66"/><path d="M14.63 15.34a2.47 2.47 0 1 1-3.49-3.49 2.47 2.47 0 0 1 3.49 3.49Z"/></svg>, query: 'a tomato' },
+    { name: 'A Burger', icon: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/><path d="M12 2a5 5 0 0 0-5 5v1.5a1.5 1.5 0 0 0 3 0V7a2 2 0 0 1 4 0v1.5a1.5 1.5 0 0 0 3 0V7a5 5 0 0 0-5-5Z"/><path d="M12 11c-5.333 0-8 2.667-8 4v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2c0-1.333-2.667-4-8-4Z"/></svg>, query: 'a burger' },
+    { name: 'A Slice of Bread', icon: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 8.5a2.5 2.5 0 0 1-2.5 2.5H8a2.5 2.5 0 0 1 0-5h8.5a2.5 2.5 0 0 1 2.5 2.5Z"/><path d="M6 16H5a3 3 0 0 1-3-3v-2a3 3 0 0 1 3-3h1"/><path d="M18 16h1a3 3 0 0 0 3-3v-2a3 3 0 0 0-3-3h-1"/></svg>, query: 'a slice of bread' },
 ];
 
 export default function ARVisualizerPage() {
@@ -51,24 +51,24 @@ export default function ARVisualizerPage() {
   }
 
   const itemToModelMap: Record<string, string> = {
-    "t-shirt": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/t-shirt.glb?v=1722450035123",
-    "apple": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/apple.glb?v=1722450009435",
-    "avocado": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/avocado.glb?v=1722450012223",
-    "cup of coffee": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/coffee_cup.glb?v=1722450017195",
-    "tomato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/tomato.glb?v=1722450037846",
-    "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450014511",
-    "jeans": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/jeans.glb?v=1722450024840",
-    "orange": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/orange.glb?v=1722450027042",
-    "banana": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/banana.glb?v=17224500133 banana",
-    "slice of bread": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/bread.glb?v=1722450013385",
-    "egg": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/egg.glb?v=1722450021358",
-    "cheese": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/cheese.glb?v=1722450015734",
-    "chicken meat": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/chicken.glb?v=1722450016462",
-    "potato": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/potato.glb?v=1722450029318",
+    "t-shirt": "https://modelviewer.dev/shared-assets/models/TShirt.glb",
+    "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
+    "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
+    "cup of coffee": "https://modelviewer.dev/shared-assets/models/CoffeeCup.glb",
+    "tomato": "https://modelviewer.dev/shared-assets/models/Tomato.glb",
+    "burger": "https://modelviewer.dev/shared-assets/models/hamburger.glb",
+    "jeans": "https://modelviewer.dev/shared-assets/models/Jeans.glb",
+    "orange": "https://modelviewer.dev/shared-assets/models/Orange.glb",
+    "banana": "https://modelviewer.dev/shared-assets/models/Banana.glb",
+    "slice of bread": "https://modelviewer.dev/shared-assets/models/Bread.glb",
+    "egg": "https://modelviewer.dev/shared-assets/models/Egg.glb",
+    "cheese": "https://modelviewer.dev/shared-assets/models/Cheese.glb",
+    "chicken meat": "https://modelviewer.dev/shared-assets/models/Chicken.glb",
+    "potato": "https://modelviewer.dev/shared-assets/models/Potato.glb",
   };
 
   const getModelUrl = (item: string) => {
-      return itemToModelMap[item.toLowerCase()] || "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/water_drop.glb?v=1722450146832";
+      return itemToModelMap[item.toLowerCase()] || "https://modelviewer.dev/shared-assets/models/WaterBottle.glb";
   }
 
   return (
