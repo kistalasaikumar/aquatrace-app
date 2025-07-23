@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { Header } from '@/components/header';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'AquaTrace: Virtual Water Tracker',
@@ -26,6 +27,11 @@ export default function RootLayout({
           {children}
           <Toaster />
         </div>
+        <Script
+          type="module"
+          src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"
+          async
+        ></Script>
       </body>
     </html>
   );

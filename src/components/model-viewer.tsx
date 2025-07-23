@@ -6,7 +6,10 @@ declare global {
   namespace JSX {
     interface IntrinsicElements {
       'model-viewer': React.DetailedHTMLProps<
-        React.AllHTMLAttributes<ModelViewerElement>,
+        React.AllHTMLAttributes<ModelViewerElement> & {
+            "ar-status"?: string;
+            "ar-tracking"?: string;
+        },
         ModelViewerElement
       >;
     }
@@ -21,11 +24,7 @@ interface ModelViewerProps {
 
 export const ModelViewer: React.FC<ModelViewerProps> = ({ src, alt, itemScale }) => {
     const modelRef = useRef<ModelViewerElement>(null);
-    // Dynamically import the model-viewer to ensure it only runs on the client
-    useEffect(() => {
-        import('@google/model-viewer');
-    }, []);
-
+    
     // We can't declaratively map quantity to scale, so we use an effect.
     useEffect(() => {
         if(modelRef.current) {
@@ -33,7 +32,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({ src, alt, itemScale })
             const scale = 1 + Math.log10(Math.max(1, itemScale));
             modelRef.current.scale = `${scale} ${scale} ${scale}`;
         }
-    }, [itemScale]);
+    }, [itemScale, src]); // Re-run if src changes too
 
   return (
     <model-viewer
