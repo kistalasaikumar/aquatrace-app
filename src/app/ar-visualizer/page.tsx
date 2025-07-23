@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Loader2, Search, Droplets, Smartphone, CupSoda, Shirt, Apple, Beef } from 'lucide-react';
+import { Loader2, Search, Droplets, Smartphone, CupSoda, Shirt, Apple } from 'lucide-react';
 import type { ARVisualizerOutput } from '@/ai/flows/ar-visualizer-schema';
 import { visualizeWaterFootprint } from '@/ai/flows/ar-visualizer-flow';
 import { ModelViewer } from '@/components/model-viewer';
@@ -51,20 +51,20 @@ export default function ARVisualizerPage() {
   }
 
   const itemToModelMap: Record<string, string> = {
-    "t-shirt": "https://sketchfab.com/models/4d8b8ac18e224e29b46f5a34138a8e31/embed?camera=0&autostart=1",
-    "apple": "https://sketchfab.com/models/2f7a935aa8334861b0d2d31295321f42/embed?camera=0&autostart=1",
-    "avocado": "https://sketchfab.com/models/a1e6cf793a5b4b1b9e82937000d6e6a1/embed?camera=0&autostart=1",
-    "cup of coffee": "https://sketchfab.com/models/2704103551524e9b98a002872337b822/embed?camera=0&autostart=1",
-    "tomato": "https://sketchfab.com/models/a6a6f4e6454c4146a81b1c676940e34c/embed?camera=0&autostart=1",
-    "burger": "https://sketchfab.com/models/864db5582f3c44a2b95111005b630018/embed?camera=0&autostart=1",
-    "jeans": "https://sketchfab.com/models/a9e7011d61134a788c0b55513511f2c2/embed?camera=0&autostart=1",
-    "orange": "https://sketchfab.com/models/65735f4b55364448939c65697241ffd2/embed?camera=0&autostart=1",
-    "banana": "https://sketchfab.com/models/437e403d6e5a47e3a0a3835f5c531d2e/embed?camera=0&autostart=1",
-    "slice of bread": "https://sketchfab.com/models/3c051515e3474a589a8a728b9d3e8e19/embed?camera=0&autostart=1",
-    "egg": "https://sketchfab.com/models/13c1c73a45c747979927ef0f6f0282a5/embed?camera=0&autostart=1",
-    "cheese": "https://sketchfab.com/models/e7a177259e824c3298c471a8a25c3174/embed?camera=0&autostart=1",
-    "chicken meat": "https://sketchfab.com/models/97b314e397f34149b5c2182e66698188/embed?camera=0&autostart=1",
-    "potato": "https://sketchfab.com/models/86043429dd114a8ca463e236528d116b/embed?camera=0&autostart=1",
+    "t-shirt": "https://modelviewer.dev/shared-assets/models/TShirt.glb",
+    "apple": "https://modelviewer.dev/shared-assets/models/Apple.glb",
+    "avocado": "https://modelviewer.dev/shared-assets/models/Avocado.glb",
+    "cup of coffee": "https://modelviewer.dev/shared-assets/models/CoffeeCup.glb",
+    "tomato": "https://modelviewer.dev/shared-assets/models/Tomato.glb",
+    "burger": "https://modelviewer.dev/shared-assets/models/hamburger.glb",
+    "jeans": "https://modelviewer.dev/shared-assets/models/Jeans.glb",
+    "orange": "https://modelviewer.dev/shared-assets/models/Orange.glb",
+    "banana": "https://modelviewer.dev/shared-assets/models/Banana.glb",
+    "slice of bread": "https://modelviewer.dev/shared-assets/models/Slice.glb",
+    "egg": "https://modelviewer.dev/shared-assets/models/Chicken.glb", // Placeholder, no egg model
+    "cheese": "https://modelviewer.dev/shared-assets/models/Cheese.glb",
+    "chicken meat": "https://modelviewer.dev/shared-assets/models/Chicken.glb",
+    "potato": "https://modelviewer.dev/shared-assets/models/Potato.glb",
   };
 
   const getModelUrl = (item: string) => {
@@ -129,15 +129,7 @@ export default function ARVisualizerPage() {
             )}
             {result && (
               <div className="w-full h-full flex flex-col items-center justify-center text-center animate-in fade-in-50 duration-500">
-                  <div style={{ width: '100%', height: '400px' }}>
-                    <iframe
-                        title={result.item}
-                        allowFullScreen
-                        allow="autoplay; fullscreen; xr-spatial-tracking"
-                        src={getModelUrl(result.item)}
-                        style={{ width: '100%', height: '100%', border: 'none' }}
-                    ></iframe>
-                  </div>
+                  <ModelViewer src={getModelUrl(result.item)} alt={`3D model of ${result.item}`} />
                   <h3 className="text-2xl font-bold mt-4">{result.totalWater.toLocaleString()} Liters</h3>
                   <p className="text-muted-foreground">{result.explanation}</p>
                    <div className="mt-4 flex items-center gap-2 rounded-md bg-accent p-3 text-sm text-accent-foreground">
@@ -152,5 +144,3 @@ export default function ARVisualizerPage() {
     </main>
   );
 }
-
-    
