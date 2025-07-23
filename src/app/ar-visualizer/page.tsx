@@ -5,10 +5,18 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Loader2, Search, Droplets, Smartphone } from 'lucide-react';
+import { Loader2, Search, Droplets, Smartphone, CupSoda, Shirt, Apple, Beef } from 'lucide-react';
 import type { ARVisualizerOutput } from '@/ai/flows/ar-visualizer-schema';
 import { visualizeWaterFootprint } from '@/ai/flows/ar-visualizer-flow';
 import { ModelViewer } from '@/components/model-viewer';
+
+const presetItems = [
+    { name: '1 burger', icon: Beef, query: '1 burger' },
+    { name: '1 apple', icon: Apple, query: '1 apple' },
+    { name: 'A T-Shirt', icon: Shirt, query: 'a t-shirt' },
+    { name: 'A Cup of Coffee', icon: CupSoda, query: 'a cup of coffee' },
+    { name: 'A pair of Jeans', icon: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 22h2a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2"/><path d="M12 14V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v10"/><path d="M6 14h2a2 2 0 0 0 2-2V4"/></svg> , query: '1 pair of jeans' },
+];
 
 export default function ARVisualizerPage() {
   const [query, setQuery] = useState('1 burger');
@@ -16,14 +24,14 @@ export default function ARVisualizerPage() {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ARVisualizerOutput | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const runVisualization = async (queryString: string) => {
     setLoading(true);
     setError(null);
     setResult(null);
+    setQuery(queryString);
 
     try {
-      const output = await visualizeWaterFootprint({ query });
+      const output = await visualizeWaterFootprint({ query: queryString });
       setResult(output);
     } catch (err) {
       console.error(err);
@@ -31,7 +39,16 @@ export default function ARVisualizerPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await runVisualization(query);
   };
+
+  const handlePresetClick = async (presetQuery: string) => {
+    await runVisualization(presetQuery);
+  }
 
   const itemToModelMap: Record<string, string> = {
     "burger": "https://cdn.glitch.global/e549a996-7a71-4475-b651-4560d21a56f0/burger.glb?v=1722450001046",
@@ -63,10 +80,22 @@ export default function ARVisualizerPage() {
             <CardTitle className="font-headline text-2xl text-primary">AR Water Visualizer</CardTitle>
           </div>
           <CardDescription>
-            Type in an item to see its virtual water footprint come to life. Try "a t-shirt" or "5 apples".
+            Type in an item or select a preset to see its virtual water footprint come to life.
           </CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="mb-6 space-y-4">
+              <p className="text-sm font-medium text-muted-foreground">Or try one of these:</p>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                  {presetItems.map((item) => (
+                      <Button key={item.name} variant="outline" onClick={() => handlePresetClick(item.query)} disabled={loading} className="flex flex-col h-auto py-3 gap-2 items-center justify-center">
+                          <item.icon />
+                          <span className="text-center text-xs">{item.name}</span>
+                      </Button>
+                  ))}
+              </div>
+          </div>
+
           <form onSubmit={handleSubmit} className="flex items-center gap-2 mb-8">
             <Input
               type="text"
@@ -89,7 +118,7 @@ export default function ARVisualizerPage() {
             {!result && !loading && (
                 <div className="text-center text-muted-foreground">
                     <Droplets size={48} className="mx-auto mb-4"/>
-                    <p>Enter an item above to visualize its water footprint.</p>
+                    <p>Enter an item above or select a preset to visualize its water footprint.</p>
                 </div>
             )}
              {loading && (
