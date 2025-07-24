@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { ExtendedWaterFootprintAnalysisInput, WaterSavingTipsOutput } from '@/ai/flows/generate-water-saving-tips';
 import { getWaterSavingTipsAction } from '@/app/actions';
-import { ResultsDisplay, type ResultsData } from '@/components/results-display';
+import { ResultsDisplay, type ResultsData, type BadgeInfo } from '@/components/results-display';
 import { Droplets } from 'lucide-react';
 import { MultiStepQuestionnaire } from '@/components/multi-step-questionnaire';
 import { addScore, getLeaderboard } from '@/services/leaderboardService';
@@ -49,6 +49,25 @@ export default function AquaTracePage() {
 
       // Get updated leaderboard
       const updatedLeaderboard = await getLeaderboard();
+      
+      // Badge logic
+      const badges: BadgeInfo[] = [];
+      if (totalFootprint < 2000) {
+        badges.push({ name: 'Aqua Saver', description: 'Your total water usage is impressively low!' });
+      }
+      if (data.dietType === 'Vegetarian' || data.dietType === 'Vegan') {
+          badges.push({ name: 'Plant-Forward', description: 'Choosing a plant-based diet saves a lot of water.' });
+      }
+      // This is a simplified check based on the questionnaire data.
+      // We can infer the toilet type from the `outdoorWatering` field where we stored it.
+      // A better approach would be to pass the full form data.
+      // For now, let's assume we can't get it perfectly.
+      // A more robust way: pass `data.showerType` and `data.toiletType` into `getWaterSavingTipsAction` and calculate there.
+      // Let's create a placeholder badge for now.
+      if (data.showerTime < 8) {
+         badges.push({ name: 'Quick Shower', description: 'You save water with short showers.' });
+      }
+
 
       const calculatedResults: ResultsData = {
         totalFootprint,
@@ -62,6 +81,7 @@ export default function AquaTracePage() {
             ...entry,
             isCurrentUser: entry.name.toLowerCase() === data.userName.toLowerCase()
         })),
+        badges,
       };
 
       setResults(calculatedResults);

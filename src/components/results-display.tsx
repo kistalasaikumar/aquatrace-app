@@ -4,10 +4,17 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { PieChart, Pie, Cell } from 'recharts';
-import { Sparkles, Droplets, Trophy } from 'lucide-react';
+import { Sparkles, Droplets, Trophy, Award, Leaf, ShowerHead } from 'lucide-react';
 import type { LeaderboardEntry } from './leaderboard';
 import { Leaderboard } from './leaderboard';
+import { Badge } from './ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 
+
+export interface BadgeInfo {
+  name: string;
+  description: string;
+}
 
 export interface ResultsData {
   totalFootprint: number;
@@ -18,11 +25,19 @@ export interface ResultsData {
   }[];
   tips: string[];
   leaderboard: LeaderboardEntry[];
+  badges: BadgeInfo[];
 }
 
 interface ResultsDisplayProps {
   results: ResultsData;
 }
+
+const badgeIcons: { [key: string]: React.ReactNode } = {
+  'Aqua Saver': <Award className="h-4 w-4" />,
+  'Plant-Forward': <Leaf className="h-4 w-4" />,
+  'Quick Shower': <ShowerHead className="h-4 w-4" />,
+};
+
 
 export function ResultsDisplay({ results }: ResultsDisplayProps) {
   const chartConfig = results.footprintBreakdown.reduce((acc, item) => {
@@ -36,8 +51,31 @@ export function ResultsDisplay({ results }: ResultsDisplayProps) {
         <div className="lg:col-span-3 space-y-8">
           <Card className="w-full shadow-lg animate-in fade-in-50 duration-500">
             <CardHeader>
-              <CardTitle className="font-headline text-2xl text-primary">Your Water Footprint</CardTitle>
-              <CardDescription>Here is a breakdown of your estimated daily virtual water usage.</CardDescription>
+              <div className="flex justify-between items-start">
+                  <div>
+                    <CardTitle className="font-headline text-2xl text-primary">Your Water Footprint</CardTitle>
+                    <CardDescription>Here is a breakdown of your estimated daily virtual water usage.</CardDescription>
+                  </div>
+                  {results.badges.length > 0 && (
+                     <TooltipProvider>
+                        <div className="flex gap-2 flex-wrap justify-end max-w-xs">
+                          {results.badges.map(badge => (
+                              <Tooltip key={badge.name}>
+                                  <TooltipTrigger asChild>
+                                    <Badge variant="secondary" className="gap-1.5 pr-2.5 pl-2 cursor-help">
+                                      {badgeIcons[badge.name] || <Award className="h-4 w-4" />}
+                                      {badge.name}
+                                    </Badge>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                      <p>{badge.description}</p>
+                                  </TooltipContent>
+                              </Tooltip>
+                          ))}
+                        </div>
+                      </TooltipProvider>
+                  )}
+              </div>
             </CardHeader>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <div className="flex flex-col items-center justify-center space-y-2">
