@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/calculator', label: 'Calculator' },
+  { href: '/leaderboard', label: 'Leaderboard' },
   { href: '/virtual-water', label: 'Virtual Water' },
   { href: '/ar-visualizer', label: 'AR Visualizer' },
   { href: '/about', label: 'About' },

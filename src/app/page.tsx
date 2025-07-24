@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -17,8 +18,9 @@ export default function LandingPage() {
     useEffect(() => {
         async function fetchLeaderboard() {
             try {
+                // Fetch only top 5 for the landing page
                 const data = await getLeaderboard();
-                setLeaderboard(data);
+                setLeaderboard(data.slice(0, 5));
             } catch (error) {
                 console.error("Failed to fetch leaderboard", error);
             } finally {
@@ -53,26 +55,30 @@ export default function LandingPage() {
                             </p>
                         </div>
                         
-                        {leaderboard.length > 0 && (
-                            <Card className="w-full max-w-md shadow-lg animate-in fade-in-50 duration-500">
-                                <CardHeader>
-                                    <div className="flex items-center gap-2 justify-center">
-                                        <Trophy className="h-6 w-6 text-primary" />
-                                        <CardTitle className="font-headline text-2xl text-primary">AquaLeaders</CardTitle>
-                                    </div>
-                                    <CardDescription>See how you stack up against other savers!</CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <Leaderboard leaderboard={leaderboard} />
-                                </CardContent>
-                            </Card>
-                        )}
+                        <div className="flex flex-col items-center gap-4 w-full max-w-md">
+                            <Link href="/calculator" passHref>
+                                <Button size="lg" className="text-lg">
+                                    Calculate Your Virtual Water
+                                </Button>
+                            </Link>
 
-                        <Link href="/calculator" passHref>
-                             <Button size="lg" className="text-lg">
-                                Calculate Your Virtual Water
-                            </Button>
-                        </Link>
+                            {leaderboard.length > 0 && (
+                                <Card className="w-full shadow-lg animate-in fade-in-50 duration-500">
+                                    <CardHeader>
+                                        <div className="flex items-center gap-2 justify-center">
+                                            <Trophy className="h-6 w-6 text-primary" />
+                                            <CardTitle className="font-headline text-2xl text-primary">Top AquaLeaders</CardTitle>
+                                        </div>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <Leaderboard leaderboard={leaderboard} />
+                                        <Link href="/leaderboard" passHref>
+                                            <Button variant="link" className="w-full mt-4">View full leaderboard</Button>
+                                        </Link>
+                                    </CardContent>
+                                </Card>
+                            )}
+                        </div>
                     </div>
                 </div>
             </main>
