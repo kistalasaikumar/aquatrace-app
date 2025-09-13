@@ -56,6 +56,24 @@ export async function generateWaterSavingTips(
   return generateWaterSavingTipsFlow(input);
 }
 
+
+const tipsPrompt = ai.definePrompt({
+    name: 'tipsPrompt',
+    input: { schema: WaterFootprintAnalysisInputSchema },
+    output: { schema: WaterSavingTipsOutputSchema },
+    prompt: `You are a Water Conservation Expert. Based on the data below, generate 5 personalized and actionable water-saving tips.
+  
+        Data:
+        - Household Size: {{householdSize}}
+        - Diet Type: {{dietType}}
+        - Average Shower Time: {{showerTime}} minutes
+        - Laundry Frequency: {{laundryFrequency}} loads per week
+        - Outdoor Watering: {{outdoorWatering}}
+
+        Return the tips as a JSON object with a single key "tips" which is an array of strings.`,
+});
+
+
 const generateWaterSavingTipsFlow = ai.defineFlow(
   {
     name: 'generateWaterSavingTipsFlow',
@@ -63,29 +81,10 @@ const generateWaterSavingTipsFlow = ai.defineFlow(
     outputSchema: WaterSavingTipsOutputSchema,
   },
   async input => {
-    const { text } = await ai.generate({
-        model: 'googleai/gemini-2.0-flash',
-        prompt: `You are an expert in water conservation. Based on the following data, generate a list of 5 personalized water-saving tips.
-  
-        Data:
-        - Household Size: ${input.householdSize}
-        - Diet Type: ${input.dietType}
-        - Average Shower Time: ${input.showerTime} minutes
-        - Laundry Frequency: ${input.laundryFrequency} loads per week
-        - Outdoor Watering: ${input.outdoorWatering}
-  
-        Return the tips as a JSON object with a single key "tips" which is an array of strings. For example: {"tips": ["Tip 1", "Tip 2", "Tip 3", "Tip 4", "Tip 5"]}`,
-    });
-
-    try {
-        const parsed = JSON.parse(text);
-        // Validate the parsed object against the Zod schema
-        const validatedOutput = WaterSavingTipsOutputSchema.parse(parsed);
-        return validatedOutput;
-    } catch (e) {
-        console.error("Failed to parse AI output:", text, e);
-        // Return a default or error state if parsing fails
-        return { tips: ["Could not generate tips at this time. Please try again later.", "Reducing shower time is a great way to save water.", "Consider a plant-based diet, as meat production is very water-intensive.", "Only run the dishwasher and washing machine with full loads.", "Check for and repair any leaks in your faucets and toilets."] };
+    const { output } = await tipsPrompt(input);
+    if (!output) {
+        throw new Error("Failed to generate tips.");
     }
+    return output;
   }
 );
