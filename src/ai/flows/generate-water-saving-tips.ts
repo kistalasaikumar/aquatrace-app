@@ -70,7 +70,17 @@ const tipsPrompt = ai.definePrompt({
         - Laundry Frequency: {{laundryFrequency}} loads per week
         - Outdoor Watering: {{outdoorWatering}}
 
-        Return the tips as a JSON object with a single key "tips" which is an array of strings.`,
+        Return the tips as a JSON object with a single key "tips" which is an array of strings. For example:
+        {
+          "tips": [
+            "Consider installing a low-flow showerhead to save water during your daily showers.",
+            "Water your garden in the early morning or late evening to reduce evaporation.",
+            "When washing dishes by hand, don't let the water run. Fill one basin with wash water and the other with rinse water.",
+            "Shorten your shower by a minute or two and you'll save up to 150 gallons per month.",
+            "Check your toilets for leaks by putting a few drops of food coloring in the tank. If the color shows up in the bowl without flushing, you have a leak."
+          ]
+        }`,
+    model: 'googleai/gemini-pro'
 });
 
 
