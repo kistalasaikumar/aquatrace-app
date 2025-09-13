@@ -1,3 +1,4 @@
+
 'use server';
 
 import { db } from '@/lib/firebase';
@@ -47,8 +48,14 @@ export async function getLeaderboard(): Promise<LeaderboardEntry[]> {
   const querySnapshot = await getDocs(q);
   
   const leaderboard: LeaderboardEntry[] = [];
+  const names = new Set<string>();
+
   querySnapshot.forEach((doc) => {
-    leaderboard.push({ id: doc.id, ...doc.data() } as LeaderboardEntry);
+    const data = doc.data() as LeaderboardEntry;
+    if (!names.has(data.name.toLowerCase())) {
+        leaderboard.push({ id: doc.id, ...data });
+        names.add(data.name.toLowerCase());
+    }
   });
 
   return leaderboard;

@@ -1,18 +1,10 @@
+
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
     match /leaderboard/{document} {
-      // Allow public read access (get, list)
-      allow read: if true;
-      
-      // Allow anyone to create a new score
-      allow create: if true;
-
-      // Allow anyone to update a score
-      allow update: if true;
-      
-      // Explicitly deny deletion
-      allow delete: if false;
+      allow read, write: if true;
     }
   }
 }
