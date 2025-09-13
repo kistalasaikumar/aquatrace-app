@@ -64,7 +64,7 @@ const generateWaterSavingTipsFlow = ai.defineFlow(
   },
   async input => {
     const { text } = await ai.generate({
-        model: 'googleai/gemini-pro',
+        model: 'googleai/gemini-2.0-flash',
         prompt: `You are an expert in water conservation. Based on the following data, generate a list of 5 personalized water-saving tips.
   
         Data:
@@ -74,7 +74,7 @@ const generateWaterSavingTipsFlow = ai.defineFlow(
         - Laundry Frequency: ${input.laundryFrequency} loads per week
         - Outdoor Watering: ${input.outdoorWatering}
   
-        Return the tips as a JSON object with a single key "tips" which is an array of strings. For example: {"tips": ["Tip 1", "Tip 2"]}`,
+        Return the tips as a JSON object with a single key "tips" which is an array of strings. For example: {"tips": ["Tip 1", "Tip 2", "Tip 3", "Tip 4", "Tip 5"]}`,
     });
 
     try {
@@ -83,9 +83,9 @@ const generateWaterSavingTipsFlow = ai.defineFlow(
         const validatedOutput = WaterSavingTipsOutputSchema.parse(parsed);
         return validatedOutput;
     } catch (e) {
-        console.error("Failed to parse AI output:", e);
+        console.error("Failed to parse AI output:", text, e);
         // Return a default or error state if parsing fails
-        return { tips: ["Could not generate tips at this time. Please try again later."] };
+        return { tips: ["Could not generate tips at this time. Please try again later.", "Reducing shower time is a great way to save water.", "Consider a plant-based diet, as meat production is very water-intensive.", "Only run the dishwasher and washing machine with full loads.", "Check for and repair any leaks in your faucets and toilets."] };
     }
   }
 );
