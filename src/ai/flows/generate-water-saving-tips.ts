@@ -63,35 +63,29 @@ const generateWaterSavingTipsFlow = ai.defineFlow(
     outputSchema: WaterSavingTipsOutputSchema,
   },
   async input => {
-    const { output } = await ai.generate({
-        model: 'googleai/gemini-2.0-flash',
-        prompt: `You are an expert in water conservation, skilled at providing personalized and actionable advice to reduce water consumption.
-
-  Based on the following water footprint analysis, generate a list of personalized water saving tips.
-
-  Household Size: ${input.householdSize}
-  Diet Type: ${input.dietType}
-  Shower Time (minutes): ${input.showerTime}
-  Laundry Frequency (loads per week): ${input.laundryFrequency}
-  Outdoor Watering Habits: ${input.outdoorWatering}
-
-  Provide specific, actionable tips tailored to the user's situation. Focus on high-impact changes that can significantly reduce their water footprint.
-  Include tips related to:
-  - Reducing water consumption in the bathroom (e.g., shorter showers, low-flow showerheads).
-  - Optimizing laundry habits (e.g., washing full loads, using cold water).
-  - Conserving water in the kitchen (e.g., fixing leaks, using a dishwasher efficiently).
-  - Reducing water usage in the yard and garden (e.g., watering deeply but less frequently, using drought-tolerant plants).
-  - Adjusting dietary choices to reduce water footprint (e.g., eating less meat, choosing locally sourced foods).
-
-  The tips should be clear, concise, and easy to implement. The tips should be appropriate and applicable to the user's lifestyle and habits.
-
-  Format the tips as a bulleted list.
-  `,
-        output: {
-            schema: WaterSavingTipsOutputSchema
-        }
+    const { text } = await ai.generate({
+        model: 'googleai/gemini-pro',
+        prompt: `You are an expert in water conservation. Based on the following data, generate a list of 5 personalized water-saving tips.
+  
+        Data:
+        - Household Size: ${input.householdSize}
+        - Diet Type: ${input.dietType}
+        - Average Shower Time: ${input.showerTime} minutes
+        - Laundry Frequency: ${input.laundryFrequency} loads per week
+        - Outdoor Watering: ${input.outdoorWatering}
+  
+        Return the tips as a JSON object with a single key "tips" which is an array of strings. For example: {"tips": ["Tip 1", "Tip 2"]}`,
     });
 
-    return output!;
+    try {
+        const parsed = JSON.parse(text);
+        // Validate the parsed object against the Zod schema
+        const validatedOutput = WaterSavingTipsOutputSchema.parse(parsed);
+        return validatedOutput;
+    } catch (e) {
+        console.error("Failed to parse AI output:", e);
+        // Return a default or error state if parsing fails
+        return { tips: ["Could not generate tips at this time. Please try again later."] };
+    }
   }
 );
