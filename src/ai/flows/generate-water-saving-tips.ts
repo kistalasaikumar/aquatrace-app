@@ -56,19 +56,24 @@ export async function generateWaterSavingTips(
   return generateWaterSavingTipsFlow(input);
 }
 
-const prompt = ai.definePrompt({
-  name: 'waterSavingTipsPrompt',
-  input: {schema: WaterFootprintAnalysisInputSchema},
-  output: {schema: WaterSavingTipsOutputSchema},
-  prompt: `You are an expert in water conservation, skilled at providing personalized and actionable advice to reduce water consumption.
+const generateWaterSavingTipsFlow = ai.defineFlow(
+  {
+    name: 'generateWaterSavingTipsFlow',
+    inputSchema: WaterFootprintAnalysisInputSchema,
+    outputSchema: WaterSavingTipsOutputSchema,
+  },
+  async input => {
+    const { output } = await ai.generate({
+        model: 'googleai/gemini-2.0-flash',
+        prompt: `You are an expert in water conservation, skilled at providing personalized and actionable advice to reduce water consumption.
 
   Based on the following water footprint analysis, generate a list of personalized water saving tips.
 
-  Household Size: {{{householdSize}}}
-  Diet Type: {{{dietType}}}
-  Shower Time (minutes): {{{showerTime}}}
-  Laundry Frequency (loads per week): {{{laundryFrequency}}}
-  Outdoor Watering Habits: {{{outdoorWatering}}}
+  Household Size: ${input.householdSize}
+  Diet Type: ${input.dietType}
+  Shower Time (minutes): ${input.showerTime}
+  Laundry Frequency (loads per week): ${input.laundryFrequency}
+  Outdoor Watering Habits: ${input.outdoorWatering}
 
   Provide specific, actionable tips tailored to the user's situation. Focus on high-impact changes that can significantly reduce their water footprint.
   Include tips related to:
@@ -82,16 +87,11 @@ const prompt = ai.definePrompt({
 
   Format the tips as a bulleted list.
   `,
-});
+        output: {
+            schema: WaterSavingTipsOutputSchema
+        }
+    });
 
-const generateWaterSavingTipsFlow = ai.defineFlow(
-  {
-    name: 'generateWaterSavingTipsFlow',
-    inputSchema: WaterFootprintAnalysisInputSchema,
-    outputSchema: WaterSavingTipsOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
     return output!;
   }
 );
