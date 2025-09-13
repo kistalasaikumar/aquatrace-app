@@ -2,9 +2,8 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow public read and write access to the leaderboard for this demo app.
-    // In a production app, you would want to restrict write access.
-    match /leaderboard/{entry} {
+    // Allow public read access to the leaderboard
+    match /leaderboard/{document=**} {
       allow read, write: if true;
     }
   }
